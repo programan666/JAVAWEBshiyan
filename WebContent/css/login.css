@@ -1,0 +1,244 @@
+@charset "utf-8";
+
+body{
+/*	top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    overflow: auto;*/
+    margin: 0;
+    background: url(../images/background.jpg) no-repeat;
+	background-size: cover;
+	font: normal 14px/20px Avenir,arial,sans-serif;
+}
+
+h1,.h1{
+	display: block;
+	text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+h2,.h2{
+	display: block;
+	text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+ul{
+	list-style: none;
+}
+
+.left{
+	float: left;
+}
+
+.right{
+	float: right;
+}
+
+.no-margin{
+	margin: 0!important;
+}
+
+.no-padding{
+	padding: 0!important;
+}
+
+
+#header{
+	max-width: 100%;
+}
+
+.lay-center{
+	width: 80%;
+	margin: 0 auto;
+}
+
+.common{
+	width: 100%;
+	margin: 0 auto;
+}
+
+.head-select{
+	margin-top: 290px;
+}
+
+.login-btn{
+	position: relative;
+}
+
+.login-btn-s{
+	width: 250px;
+	height: 250px;
+	border-radius: 50%;
+	margin: 0 auto;
+	background: url(../images/loginBtna.png);
+	background-size: cover;
+	position: absolute;
+}
+
+.show-hover{
+	position: absolute;
+	z-index: 1000;
+	background-color: #000000;
+	opacity: 0.2;
+	border-radius: 50%;
+}
+
+.show-hover:hover{
+	opacity: 0;
+}
+
+.entry-footer{
+	margin-top: 10px;
+	width: 100%;
+	height: 100px;
+}
+
+.entry-footer .ht{
+	height: 300px;
+}
+
+.entry-footer .htt{
+	height: 120px;
+}
+
+.entry-footer .httt{
+	height: 50px;
+}
+
+.wrong-info{
+	color: red;
+	letter-spacing: 0.5px;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+}
+
+.login-box{
+	width: 50%;
+	margin: 0 auto;
+}
+
+.login-input{
+	margin: 10px 0;
+	height: 42px!important;
+	line-height: 31px!important;
+    font-size: 15px!important;
+    letter-spacing: 3px!important;
+}
+
+.login-box-btn{
+	margin: 20px 0;
+	font-size: 18px!important;
+	background: #86CE2F!important;
+	color: #FFFFFF!important;
+	border-radius: 0!important;
+}
+
+.login-box-btn:hover{
+	background: #9ED957!important;
+}
+
+.login-box-footer{
+	margin-top: 45px;
+	height: 25px;
+	text-align: right;
+}
+
+.login-box-footer-inner{
+	width: 87px;
+	text-align: center;
+	color: #000000;
+	float: right;
+}
+
+.entry-footer .col-md-3{
+	padding: 0;
+	text-align: center;
+}
+
+.left-btn{
+	padding: 0;
+	width: 100%;
+	position: ;
+}
+
+.left-btn{
+	width: 100%;
+	height: 45px;
+	float: left;
+}
+
+.lfet-btn_1{
+	height: 112px!important;
+	background: url(../images/lbtn1.png) no-repeat;
+	background-size: 156.9px;
+}
+.lfet-btn_2{
+	background: url(../images/lbtn2.png) no-repeat;
+	background-size: 156.9px;
+}
+.lfet-btn_3{
+	background: url(../images/lbtn3.png) no-repeat;
+	background-size: 156.9px;
+}
+.lfet-btn_4{
+	background: url(../images/lbtn4.png) no-repeat;
+	background-size: 156.9px;
+}
+.lfet-btn_5{
+	background: url(../images/lbtn4.png) no-repeat;
+	background-size: 156.9px;
+}
+
+.btnshow-hover{
+	position: absolute;
+	z-index: 1000;
+	background-color: #000000;
+	opacity: 0.2;
+}
+
+.btnshow-hover:hover{
+	opacity: 0;
+}
+
+.ht a{
+	border-radius: 5px;
+}
+
+.vedio-btn{
+	height: 100%!important;
+	background: url(../images/vediobtn.jpg)no-repeat;
+	background-size: cover;
+	border-radius: 0px!important;
+}
+
+.control-vedio{
+	display: none;
+}
+
+.longin-type-select{
+	display:block;
+	margin:0 auto;
+	font-size: 16px;
+	text-align: center;
+	letter-spacing: 1px;
+}
+
+.footer-link a{
+	font-size: 10px;
+	letter-spacing: 1px;
+	color: #8A8A8A;
+}
+
+.footer-link div{
+	padding: 0;
+	height: 20px!important;
+    text-align: center;
+    border-left: 1px #8A8A8A solid;
+}
+

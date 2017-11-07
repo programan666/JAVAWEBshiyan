@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>JAVAWEB</display-name>
+  <welcome-file-list>
+    <welcome-file>login.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <servlet-name>MngServlet</servlet-name>
+    <servlet-class>mng.servlet.MngServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MngServlet</servlet-name>
+    <url-pattern>/MngServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ImagesServlet</servlet-name>
+    <servlet-class>pic.servlet.ImagesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ImagesServlet</servlet-name>
+    <url-pattern>/ImagesServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>EqtServlet</servlet-name>
+    <servlet-class>eqt.servlet.EqtServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EqtServlet</servlet-name>
+    <url-pattern>/EqtServlet</url-pattern>
+    </servlet-mapping>
+      <servlet>
+    <servlet-name>RolServlet</servlet-name>
+    <servlet-class>rol.servlet.RolServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RolServlet</servlet-name>
+    <url-pattern>/RolServlet</url-pattern>
+  </servlet-mapping>
+</web-app>
