@@ -27,8 +27,8 @@
   <servlet-mapping>
     <servlet-name>EqtServlet</servlet-name>
     <url-pattern>/EqtServlet</url-pattern>
-    </servlet-mapping>
-      <servlet>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>RolServlet</servlet-name>
     <servlet-class>rol.servlet.RolServlet</servlet-class>
   </servlet>
@@ -36,4 +36,5 @@
     <servlet-name>RolServlet</servlet-name>
     <url-pattern>/RolServlet</url-pattern>
   </servlet-mapping>
+  
 </web-app>

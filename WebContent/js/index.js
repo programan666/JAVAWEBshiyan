@@ -62,7 +62,26 @@ $('document').ready(function(){
 	$('#getReEqt').click(function(){
 		$('#mEquipmentCon2').click();
 	});
-	
+	$('#updateEqtPicBtn').click(function(){
+		if($('#imgFile').val()!=''){
+			var file = $('#imgFile').get(0).files[0];
+			var formData = new FormData();
+			formData.append("addEqtPicId",$('#addEqtPicId').val());
+			formData.append("imgFile",file);
+			$.ajax({
+				url: 'http://localhost:7777/JAVAWEB/updatePicServlet',
+				type: 'POST',
+				data: formData,
+				processData: false,
+				contentType: false,
+			}).done(function() {
+					layer.msg('图片更改成功');
+				})
+		}
+		else{
+			layer.msg('图片没有更改');
+		}
+	});
 });
 
 

@@ -327,12 +327,12 @@
 								</span>
 								
 									<div class="updateEqt-box-right">
-										<form onsubmit="true" action="ImagesServlet" name="updateEqtForm" id="updateEqtForm" method="post">
-										<input type="hidden" name="option" value="2" />
+										<!-- <form onsubmit="true" action="ImagesServlet" name="updateEqtForm" id="updateEqtForm" method="post"> -->
+										<!--<input type="hidden" name="option" value="2" />-->
 										<input type="hidden" name="addEqtPicId" id="addEqtPicId" value="<%=eqt.getPic().getPicId() %>" placeholder="输入内容" class="form-control input-one">
 										<img id="image"  src="ImagesServlet?option=1&&picId=<%=eqt.getPic().getPicId() %>" alt=""  />
 										修改图片<input type="file" id="imgFile" name="imgFile" accept="image/*">
-										<input type="submit" id="addEqtBtn" value="修改图片" class="form-control box-btn" style="width: 45%;bottom: 12px;"/>
+										<input type="button" id="updateEqtPicBtn" value="修改图片" class="form-control box-btn" style="width: 45%;bottom: 12px;"/>
 									</div>
 								
 									
