@@ -104,11 +104,12 @@
 						<div class="equipment-box">
 							<img src="ImagesServlet?option=1&&picId=<%=eqt.getPic().getPicId() %>" alt="" />
 							<span><%=eqt.getEqtName() %></span>
+							<a href="EqtServlet?option=2&&eqtId=<%=eqt.getEqtId() %>" class="equipment-del-btn">删除</a>
 							<a href="EqtServlet?option=2&&eqtId=<%=eqt.getEqtId() %>" class="equipment-info-btn">查看/修改</a>
 						</div>
 						<%} }%>
 						<div class="col-md-offset-9 col-md-3">
-							<a href="" class="btn btn-success btn-block">添加装备</a>
+							<a href="#" id="addEqtButton" class="btn btn-success btn-block" data-toggle="modal" data-target="#addEqtDialog">添加装备</a>
 						</div>
 
 					</div>
@@ -323,7 +324,7 @@
 									<input type="hidden" name="addEqtPicId" id="addEqtPicId" value="<%=eqt.getPic().getPicId() %>" placeholder="输入内容" class="form-control input-one">
 									</div>
 									<span style="width: 100%;">
-									<input type="submit" id="addEqtBtn" value="修改" class="form-control box-btn" style="width: 45%;position: absolute;bottom: 12px;margin: 10px 22.5%!important;" onclick="checkUpdateEqt()"/>
+									<input type="submit" id="updateEqtBtn" value="修改" class="form-control box-btn" style="width: 45%;position: absolute;bottom: 12px;margin: 10px 22.5%!important;" onclick="checkUpdateEqt()"/>
 								</span>
 								
 									<div class="updateEqt-box-right">
@@ -343,6 +344,60 @@
 					</div>
 				</div>
 			</div>
+			
+			
+			<div class="modal fade" id="addEqtDialog" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" style="margin: 150px auto;">
+					<div class="modal-content">
+						<div class="modal-body" style="height: 530px;">
+							<button type="button" id="getReEqt" class="close" data-dismiss="modal" style="font-size: 30px;">
+        					<span aria-hidden="true">&times;</span>
+    						</button>
+
+							<div class="updateEqt-box">
+									<h1 style="margin: 15px;width: 95%;">查看/修改装备</h1>
+									<div class="updateEqt-box-left">
+										<input type="hidden" name="option" value="3" />
+										<span>
+									<h4 style="color: #000000!important;">装备名称:</h4>
+									<input type="text" name="addEqtName" id="addEqtName" value="" placeholder="输入内容" class="form-control input-one">
+								</span>
+										<span>
+									<h4 style="color: #000000!important;">使用等级:</h4>
+									<input type="text" name="addEqtLevel" id="addEqtLevel" value="" placeholder="输入内容" class="form-control input-one">
+								</span>
+										<span>
+									<h4 style="color: #000000!important;">描述:</h4>
+									<input type="text" name="addEqtAttribute" id="addEqtAttribute" value="" placeholder="输入内容" class="form-control input-one">
+								</span>
+										<span>
+									<h4 style="color: #000000!important;">战斗力:</h4>
+									<input type="text" name="addEqtPower" id="addEqtPower" value="" placeholder="输入内容" class="form-control input-one">
+								</span>
+										<span>
+									<h4 style="color: #000000!important;">类型:</h4>
+									<input type="text" name="addEqtType" id="addEqtType" value="" placeholder="输入内容" class="form-control input-one">
+								</span>
+										<span>
+									<h4 style="color: #000000!important;">品质:</h4>
+									<input type="text" name="addEqtQuality" id="addEqtQuality" value="" placeholder="输入内容" class="form-control input-one">
+								</span>
+									</div>
+									<span style="width: 100%;">
+									
+								</span>
+									<div class="updateEqt-box-right">
+										<img id="image" src="" alt=""  />
+										修改图片<input type="file" id="imgFile" name="imgFile" accept="image/*">
+									</div>
+								<input type="submit" id="addEqtBtn" value="添加" class="form-control box-btn" style="width: 45%;position: absolute;bottom: 12px;margin: 10px 22.5%!important;" onclick="checkUpdateEqt()"/>
+							</div>
+						
+						</div>
+					</div>
+				</div>
+			</div>
+			
 
 			<%
 				Object searchEqtResponse = request.getAttribute("searchEqtResponse");
@@ -389,7 +444,7 @@
 			<script type="text/javascript">
 				layer.msg('删除成功');
 				setTimeout(function() {
-					$('#mEquipmentCon2').click();
+					$('#mRegionCon2').click();
 				}, 1000);
 			</script>
 			<%}} %>

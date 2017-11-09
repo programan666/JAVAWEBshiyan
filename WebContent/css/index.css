@@ -3,6 +3,7 @@ body {
 	margin: 0;
 	padding: 0;
 	background: url(../images/managerbac.jpg);
+	background-attachment:fixed;
 	background-size: 100%;
 	font: normal 14px/20px Avenir, arial, sans-serif;
 }
@@ -162,7 +163,21 @@ a:active {
 	text-align: center;
 	border-radius: 40px;
 	border: 2px #FFFFFF solid;
-	margin-top: 28px;
+	margin-top: 4px;
+}
+
+.equipment-del-btn{
+	display: block;
+	margin: 0 auto;
+	color: #FFFFFF;
+	font-size: 11px;
+	width: 45px;
+	height: 18px;
+	line-height: 17px;
+	text-align: center;
+	border-radius: 10px;
+	border: 1px #FFFFFF solid;
+	margin-top: 4px;
 }
 
 .equipment-info-btn:hover {

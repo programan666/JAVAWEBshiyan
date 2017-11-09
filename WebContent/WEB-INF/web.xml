@@ -36,5 +36,4 @@
     <servlet-name>RolServlet</servlet-name>
     <url-pattern>/RolServlet</url-pattern>
   </servlet-mapping>
-  
 </web-app>

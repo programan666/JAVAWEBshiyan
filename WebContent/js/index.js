@@ -59,9 +59,11 @@ $('document').ready(function(){
 	$('#getReReg').click(function(){
 		$('#mRegionCon2').click();
 	});
+	
 	$('#getReEqt').click(function(){
 		$('#mEquipmentCon2').click();
 	});
+	
 	$('#updateEqtPicBtn').click(function(){
 		if($('#imgFile').val()!=''){
 			var file = $('#imgFile').get(0).files[0];
@@ -82,6 +84,46 @@ $('document').ready(function(){
 			layer.msg('图片没有更改');
 		}
 	});
+	
+	$('#addEqtBtn').click(function(){
+		var addEqtName = $('#addEqtName').val();
+		var addEqtLevel = $('#addEqtLevel').val();
+		var addEqtAttribute = $('#addEqtAttribute').val();
+		var addEqtPower = $('#addEqtPower').val();
+		var addEqtType = $('#addEqtType').val();
+		var addEqtQuality = $('#addEqtQuality').val();
+		var addEqtPicName = $('#imgFile').val();
+		if(addEqtName!=''&&addEqtLevel!=''&&addEqtAttribute!=''&&addEqtPower!=''&&addEqtType!=''&&addEqtQuality!=''&&addEqtPicName!=''){
+			var file = $('#imgFile').get(0).files[0];
+			var formData = new FormData();
+			formData.append("addEqtName",addEqtName);
+			formData.append("addEqtLevel",addEqtLevel);
+			formData.append("addEqtAttribute",addEqtAttribute);
+			formData.append("addEqtPower",addEqtPower);
+			formData.append("addEqtType",addEqtType);
+			formData.append("addEqtQuality",addEqtQuality);
+			formData.append("imgFile",file);
+			$.ajax({
+				url: 'http://localhost:7777/JAVAWEB/addEqtServlet',
+				type: 'POST',
+				data: formData,
+				processData: false,
+				contentType: false,
+			}).done(function() {
+					layer.msg('装备添加成功');
+					$('#addEqtDialog').modal('hide');
+					$('#mEquipmentCon2').click();
+				})
+		}
+		else{
+			layer.msg('信息不能为空');
+		}
+
+			
+
+	});
+	
+	
 });
 
 

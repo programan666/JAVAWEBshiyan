@@ -27,7 +27,7 @@ public class PicDao implements PicDaoInt{
 		conn.close();
 	}
 	
-	//查询图片信息
+	//根据id查询图片信息
 	public Pic queryById(int picId) throws SQLException{
 		Connection conn = DbUtil.GetConnection();
 		String sql = "select pic_id,pic_name,pic_info,pic_data from pic where pic_id = ?";
@@ -43,6 +43,23 @@ public class PicDao implements PicDaoInt{
 		//conn.close();//可能会出错
 		return pic;
 	}
+	
+	//根据name查询图片id
+		public int queryByName(String picName) throws SQLException{
+			Connection conn = DbUtil.GetConnection();
+			String sql = "select pic_id from pic where pic_name = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, picName);
+			ResultSet rs = pstmt.executeQuery();
+			int picId = 0;
+			if(rs.next()){
+				picId = rs.getInt(1);
+			}
+			rs.close();
+			pstmt.close();
+			conn.close();
+			return picId;
+		}
 	
 	//删除图片
 	public void delete(int picId) throws SQLException{

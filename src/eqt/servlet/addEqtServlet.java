@@ -1,4 +1,4 @@
-package pic.servlet;
+package eqt.servlet;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,13 +21,14 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import commen.DAOFactory;
+import eqt.dao.EqtDao;
+import eqt.pojo.Eqt;
 import pic.dao.PicDao;
 import pic.pojo.Pic;
 
+@WebServlet("/addEqtServlet")
+public class addEqtServlet extends HttpServlet {
 
-@WebServlet("/updatePicServlet")
-public class updatePicServlet extends HttpServlet {
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// 设置编码
@@ -36,6 +37,7 @@ public class updatePicServlet extends HttpServlet {
 		// 响应输出流
 		OutputStream out = response.getOutputStream();
 		PicDao picdao = DAOFactory.instance().getPicDao();
+		EqtDao eqtdao = DAOFactory.instance().getEqtDao();
 		
 		//获得Servlet上下文对象
 		ServletContext context = this.getServletContext();
@@ -64,13 +66,30 @@ public class updatePicServlet extends HttpServlet {
 			//获得所有上传文件对象集合
 			List<FileItem> list = upload.parseRequest(request);
 			
-			//获得图片id
-			String eqtPicIdd = list.get(0).getString();
-			int eqtPicId = Integer.parseInt(eqtPicIdd);
-	/*		System.out.println("eqtPicId=" + eqtPicId);*/
+			
+			
+			//获得装备信息
+			String eqtName = list.get(0).getString();
+			eqtName = new String(eqtName.getBytes("iso-8859-1"),"utf-8");
+
+			String eqtLevell = list.get(1).getString();
+			int eqtLevel = Integer.parseInt(eqtLevell);
+
+			String eqtAttribute = list.get(2).getString();
+			eqtAttribute = new String(eqtAttribute.getBytes("iso-8859-1"),"utf-8");
+
+			String eqtPowerr = list.get(3).getString();
+			int eqtPower = Integer.parseInt(eqtPowerr);
+
+			String eqtType = list.get(4).getString();
+			eqtType = new String(eqtType.getBytes("iso-8859-1"),"utf-8");
+			
+			String eqtQuality = list.get(5).getString();
+			eqtQuality = new String(eqtQuality.getBytes("iso-8859-1"),"utf-8");
+			
 			
 			//获得文件对象
-			FileItem item = list.get(1);
+			FileItem item = list.get(6);
 			
 			//获得文件数据流
 			InputStream is = item.getInputStream();
@@ -89,11 +108,12 @@ public class updatePicServlet extends HttpServlet {
 			//创建文件对象
 			File file = new File(uploadPath + File.separator + fullName);
 			
-			Pic oldPic = picdao.queryById(eqtPicId);
+			Pic pic = new Pic(eqtName,"装备",(int)fileSize,is,new Date());
 			
-			Pic pic = new Pic(oldPic.getPicId(),oldPic.getPicName(),oldPic.getInfo(),(int)fileSize,is,new Date());
+			picdao.insert(pic);
 			
-			picdao.update(pic);
+			Eqt eqt = new Eqt(eqtName,eqtLevel,eqtAttribute,picdao.queryById(picdao.queryByName(eqtName)),eqtPower,eqtType,eqtQuality);
+			eqtdao.insert(eqt);
 			
 		} catch (FileUploadException e) {
 			// TODO Auto-generated catch block
@@ -106,7 +126,6 @@ public class updatePicServlet extends HttpServlet {
 		//
 	}
 
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
