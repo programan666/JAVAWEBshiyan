@@ -4,11 +4,12 @@ import java.sql.SQLException;
 
 import org.junit.Test;
 
+import commen.DAOFactory;
 import mng.dao.MngDao;
 import mng.pojo.Mng;
 
 public class TestMngDao {
-	private MngDao dao = new MngDao();
+	private MngDao dao = DAOFactory.instance().getMngDao();
 	@Test
 	public void testInsert() throws SQLException{
 		Mng mng = new Mng("second","666666");

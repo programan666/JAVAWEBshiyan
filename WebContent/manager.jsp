@@ -3,6 +3,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="reg.pojo.Reg"%>
 <%@page import="eqt.pojo.Eqt"%>
+<%@page import="ocp.pojo.Ocp"%>
 <%@page import="pic.pojo.Pic"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -42,7 +43,7 @@
 				<nav class="navbar navbar-default navbar-fixed-top">
 					<div class="container-fluid">
 						<a href="MngServlet?option=3" id="mRegionCon" class="manager-title"><span id="mRegionCon2">大区设置</span></a>
-						<a href="#" onclick="return false" id="mOccupationCon" class="manager-title"><span id="mOccupationCon2">职业设置</span></a>
+						<a href="OcpServlet?option=1" id="mOccupationCon" class="manager-title"><span id="mOccupationCon2">职业设置</span></a>
 						<a href="#" onclick="return false" class="manager-title">
 							<img src="images/logo.png" alt="斗战神" width="200" />
 						</a>
@@ -104,7 +105,7 @@
 						<div class="equipment-box">
 							<img src="ImagesServlet?option=1&&picId=<%=eqt.getPic().getPicId() %>" alt="" />
 							<span><%=eqt.getEqtName() %></span>
-							<a href="EqtServlet?option=2&&eqtId=<%=eqt.getEqtId() %>" class="equipment-del-btn">删除</a>
+							<a href="EqtServlet?option=4&&eqtId=<%=eqt.getEqtId() %>" class="equipment-del-btn">删除</a>
 							<a href="EqtServlet?option=2&&eqtId=<%=eqt.getEqtId() %>" class="equipment-info-btn">查看/修改</a>
 						</div>
 						<%} }%>
@@ -120,17 +121,24 @@
 						</div>
 					</div>
 
-					<div id="m-occupation" class="m-occupation">
-						<div id="LoopDiv">
-							<input id="S_Num" type="hidden" value="8" />
-							<div id="starsIF" class="imageflow">
-								<img src="images/1.png" longdesc="#" width="280" height="300" alt="Picture" />
-								<img src="images/2.png" longdesc="#" width="280" height="300" alt="Picture" />
-								<img src="images/1.png" longdesc="#" width="280" height="300" alt="Picture" />
-								<img src="images/3.png" longdesc="#" width="280" height="300" alt="Picture" />
-								<img src="images/4.png" longdesc="#" width="280" height="300" alt="Picture" />
-							</div>
+					<div id="m-occupation" class="m-occupation" ${mOcpBlock }>
+						
+						<%
+							ArrayList<Ocp> ocpList = (ArrayList<Ocp>)request.getAttribute("allOcp");
+							if(ocpList!=null){
+								for(Ocp ocp:ocpList){
+						%>
+						<div class="equipment-box">
+							<img src="ImagesServlet?option=1&&picId=<%=ocp.getPic().getPicId() %>" alt="" />
+							<span><%=ocp.getOcpName() %></span>
+							<a href="EqtServlet?option=4&&eqtId=<%=ocp.getOcpId() %>" class="equipment-del-btn">删除</a>
+							<a href="EqtServlet?option=2&&eqtId=<%=ocp.getOcpId() %>" class="equipment-info-btn">查看/修改</a>
 						</div>
+						<%} }%>
+						<div class="col-md-offset-9 col-md-3">
+							<a href="#" id="addEqtButton" class="btn btn-success btn-block" data-toggle="modal" data-target="#addEqtDialog">添加职业</a>
+						</div>
+						
 					</div>
 
 					<div id="m-player" class="m-player">
@@ -464,9 +472,10 @@
 			<%}} %>
 
 			<%
-				Object updateEqtReturnMessage = request.getAttribute("updateEqtReturnMessage");
-				if(updateEqtReturnMessage!=null){
-					int i = (Integer)updateEqtReturnMessage;
+				Object eqtReturnMessage = request.getAttribute("eqtReturnMessage");
+				if(eqtReturnMessage!=null){
+					int i = (Integer)eqtReturnMessage;
+					if(i==1){
 			%>
 				<script type="text/javascript">
 				layer.msg('装备信息修改成功');
@@ -474,7 +483,14 @@
 					$('#mEquipmentCon2').click();
 				}, 1000);
 			</script>
-			<%} %>
+			<%}else{ %>
+				<script type="text/javascript">
+					layer.msg('删除装备成功');
+					setTimeout(function() {
+						$('#mEquipmentCon2').click();
+					}, 1000);
+				</script>
+			<%} }%>
 		</div>
 	</body>
 

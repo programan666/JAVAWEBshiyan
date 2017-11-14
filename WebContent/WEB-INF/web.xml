@@ -36,4 +36,12 @@
     <servlet-name>RolServlet</servlet-name>
     <url-pattern>/RolServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>OcpServlet</servlet-name>
+    <servlet-class>ocp.servlet.OcpServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OcpServlet</servlet-name>
+    <url-pattern>/OcpServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -77,10 +77,26 @@ public class EqtServlet extends HttpServlet {
 				String regType = request.getParameter("addEqtType");
 				String regQuality = request.getParameter("addEqtQuality");
 				int regPicId = Integer.parseInt(request.getParameter("addEqtPicId"));
-				int updateEqtReturnMessage = 1;
+				int eqtReturnMessage = 1;
 				Eqt eqt = new Eqt(regId,regName,regLevel,regAttribute,picdao.queryById(regPicId),regPower,regType,regQuality);
 				eqtdao.eqtUpdate(eqt);
-				request.setAttribute("updateEqtReturnMessage", updateEqtReturnMessage);
+				request.setAttribute("eqtReturnMessage", eqtReturnMessage);
+				request.setAttribute("mEqtBlock", mBlock);
+				request.setAttribute("mStartNone", mNone);
+				request.getRequestDispatcher("manager.jsp").forward(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		
+		case 4:
+			//É¾³ý×°±¸
+			try {
+				int eqtId = Integer.parseInt(request.getParameter("eqtId"));
+				int eqtReturnMessage = 2;
+				eqtdao.deleteById(eqtId);
+				request.setAttribute("eqtReturnMessage", eqtReturnMessage);
 				request.setAttribute("mEqtBlock", mBlock);
 				request.setAttribute("mStartNone", mNone);
 				request.getRequestDispatcher("manager.jsp").forward(request, response);
