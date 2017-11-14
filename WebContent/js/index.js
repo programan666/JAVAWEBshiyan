@@ -64,11 +64,36 @@ $('document').ready(function(){
 		$('#mEquipmentCon2').click();
 	});
 	
+	$('#getReOcp').click(function(){
+		$('#mOccupationCon2').click();
+	});
+	
 	$('#updateEqtPicBtn').click(function(){
 		if($('#imgFile').val()!=''){
 			var file = $('#imgFile').get(0).files[0];
 			var formData = new FormData();
 			formData.append("addEqtPicId",$('#addEqtPicId').val());
+			formData.append("imgFile",file);
+			$.ajax({
+				url: 'http://localhost:7777/JAVAWEB/updatePicServlet',
+				type: 'POST',
+				data: formData,
+				processData: false,
+				contentType: false,
+			}).done(function() {
+					layer.msg('图片更改成功');
+				})
+		}
+		else{
+			layer.msg('图片没有更改');
+		}
+	});
+	
+	$('#updateOcpPicBtn').click(function(){
+		if($('#imgFile').val()!=''){
+			var file = $('#imgFile').get(0).files[0];
+			var formData = new FormData();
+			formData.append("picId",$('#updateOcpPicId').val());
 			formData.append("imgFile",file);
 			$.ajax({
 				url: 'http://localhost:7777/JAVAWEB/updatePicServlet',
@@ -118,9 +143,33 @@ $('document').ready(function(){
 		else{
 			layer.msg('信息不能为空');
 		}
-
-			
-
+	});
+	
+	$('#addOcpBtn').click(function(){
+		var addOcpName = $('#addOcpName').val();
+		var addOcpAttribute = $('#addOcpAttribute').val();
+		var addOcpPicName = $('#addOcpImgFile').val();
+		if(addOcpName!=''&&addOcpAttribute!=''&&addOcpPicName!=''){
+			var file = $('#addOcpImgFile').get(0).files[0];
+			var formData = new FormData();
+			formData.append("addOcpName",addOcpName);
+			formData.append("addOcpAttribute",addOcpAttribute);
+			formData.append("imgFile",file);
+			$.ajax({
+				url: 'http://localhost:7777/JAVAWEB/addOcpServlet',
+				type: 'POST',
+				data: formData,
+				processData: false,
+				contentType: false,
+			}).done(function() {
+					layer.msg('职业添加成功');
+					$('#addOcpDialog').modal('hide');
+					$('#mOccupationCon2').click();
+				})
+		}
+		else{
+			layer.msg('信息不能为空');
+		}
 	});
 	
 	
@@ -241,3 +290,14 @@ function checkUpdateEqt(){
 	}
 }
 
+function checkUpdateOcp(){
+	var updateOcpName = $('#updateOcpName').val();
+	var updateOcpAttribute = $('#updateOcpAttribute').val();
+	if(updateOcpName!=''&&updateOcpName&&updateOcpAttribute!=''&&updateOcpAttribute){
+		return true;
+	}
+	else{
+		layer.msg('信息不能为空');
+		return false;
+	}
+}

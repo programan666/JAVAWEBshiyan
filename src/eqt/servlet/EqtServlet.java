@@ -95,7 +95,9 @@ public class EqtServlet extends HttpServlet {
 			try {
 				int eqtId = Integer.parseInt(request.getParameter("eqtId"));
 				int eqtReturnMessage = 2;
+				int picId = eqtdao.queryById(eqtId).getPic().getPicId();
 				eqtdao.deleteById(eqtId);
+				picdao.delete(picId);
 				request.setAttribute("eqtReturnMessage", eqtReturnMessage);
 				request.setAttribute("mEqtBlock", mBlock);
 				request.setAttribute("mStartNone", mNone);

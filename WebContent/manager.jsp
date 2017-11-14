@@ -32,6 +32,15 @@
 					image.src = this.result;
 				}
 			}
+				var addOcpImgFile = document.getElementById('addOcpImgFile');
+				var addOcpImage = document.getElementById('addOcpImage');
+				addOcpImgFile.onchange = function(e) {
+				var fr = new FileReader();
+				fr.readAsDataURL(this.files[0]);
+				fr.onload= function(e) {					
+					addOcpImage.src = this.result;
+				}
+			}
 			});
 		</script>
 	</head>
@@ -131,12 +140,12 @@
 						<div class="equipment-box">
 							<img src="ImagesServlet?option=1&&picId=<%=ocp.getPic().getPicId() %>" alt="" />
 							<span><%=ocp.getOcpName() %></span>
-							<a href="EqtServlet?option=4&&eqtId=<%=ocp.getOcpId() %>" class="equipment-del-btn">删除</a>
-							<a href="EqtServlet?option=2&&eqtId=<%=ocp.getOcpId() %>" class="equipment-info-btn">查看/修改</a>
+							<a href="OcpServlet?option=4&&ocpId=<%=ocp.getOcpId() %>" class="equipment-del-btn">删除</a>
+							<a href="OcpServlet?option=2&&ocpId=<%=ocp.getOcpId() %>" class="equipment-info-btn">查看/修改</a>
 						</div>
 						<%} }%>
 						<div class="col-md-offset-9 col-md-3">
-							<a href="#" id="addEqtButton" class="btn btn-success btn-block" data-toggle="modal" data-target="#addEqtDialog">添加职业</a>
+							<a href="#" id="addEqtButton" class="btn btn-success btn-block" data-toggle="modal" data-target="#addOcpDialog">添加职业</a>
 						</div>
 						
 					</div>
@@ -353,7 +362,6 @@
 				</div>
 			</div>
 			
-			
 			<div class="modal fade" id="addEqtDialog" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog" style="margin: 150px auto;">
 					<div class="modal-content">
@@ -363,7 +371,7 @@
     						</button>
 
 							<div class="updateEqt-box">
-									<h1 style="margin: 15px;width: 95%;">查看/修改装备</h1>
+									<h1 style="margin: 15px;width: 95%;">添加装备</h1>
 									<div class="updateEqt-box-left">
 										<input type="hidden" name="option" value="3" />
 										<span>
@@ -396,7 +404,7 @@
 								</span>
 									<div class="updateEqt-box-right">
 										<img id="image" src="" alt=""  />
-										修改图片<input type="file" id="imgFile" name="imgFile" accept="image/*">
+										选择图片<input type="file" id="imgFile" name="imgFile" accept="image/*">
 									</div>
 								<input type="submit" id="addEqtBtn" value="添加" class="form-control box-btn" style="width: 45%;position: absolute;bottom: 12px;margin: 10px 22.5%!important;" onclick="checkUpdateEqt()"/>
 							</div>
@@ -406,6 +414,89 @@
 				</div>
 			</div>
 			
+			<div class="modal fade" id="getOcpDialog" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" style="margin: 150px auto;">
+					<div class="modal-content">
+						<div class="modal-body" style="height: 530px;">
+							<button type="button" id="getReOcp" class="close" data-dismiss="modal" style="font-size: 30px;">
+        					<span aria-hidden="true">&times;</span>
+    					</button>
+
+							<%
+    						Object ocpReturn = (Object)request.getAttribute("ocpReturn");
+    						if(ocpReturn!=null){
+    							Ocp ocp = (Ocp)ocpReturn;
+    					%>
+
+							<div class="updateEqt-box">
+							
+									<h1 style="margin: 15px;width: 95%;">查看/修改职业</h1>
+									<form onsubmit="return checkUpdateOcp();" action="OcpServlet" name="updateOcpForm" id="updateOcpForm" method="post">
+									<div class="updateEqt-box-left">
+										<input type="hidden" name="option" value="3" />
+										<span>
+									<input type="hidden" name="updateOcpId" id="updateOcpId" value="<%=ocp.getOcpId() %>" placeholder="输入内容" class="form-control input-one">
+									<h4 style="color: #000000!important;">职业名称:</h4>
+									<input type="text" name="updateOcpName" id="updateOcpName" value="<%=ocp.getOcpName() %>" placeholder="输入内容" class="form-control input-one">
+								</span>
+										<span>
+									<h4 style="color: #000000!important;">职业描述:</h4>
+									<textarea rows="7" name="updateOcpAttribute" id="updateOcpAttribute" style="margin: 0px -12px 0px 0px; width: 296px; height: 243px;" placeholder="输入内容" class="form-control"><%=ocp.getOcpAttribute() %></textarea>
+								</span>
+									</div>
+									<input type="hidden" name="updateOcpPicId" id="updateOcpPicId" value="<%=ocp.getPic().getPicId() %>" placeholder="输入内容" class="form-control input-one">
+									<span style="width: 100%;">
+									<input type="submit" id="updateOcpBtn" value="修改" class="form-control box-btn" style="width: 45%;position: absolute;bottom: 12px;margin: 10px 22.5%!important;" onclick="checkUpdateOcp()"/>
+								</span>
+								
+									<div class="updateEqt-box-right">
+										<input type="hidden" name="updateOcpPicId" id="updateOcpPicId" value="<%=ocp.getPic().getPicId() %>" placeholder="输入内容" class="form-control input-one">
+										<img id="image"  src="ImagesServlet?option=1&&picId=<%=ocp.getPic().getPicId() %>" alt=""  />
+										修改图片<input type="file" id="imgFile" name="imgFile" accept="image/*">
+										<input type="button" id="updateOcpPicBtn" value="修改图片" class="form-control box-btn" style="width: 45%;bottom: 12px;"/>
+									</div>
+								</form>
+							</div>
+							<%} %>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="modal fade" id="addOcpDialog" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" style="margin: 150px auto;">
+					<div class="modal-content">
+						<div class="modal-body" style="height: 530px;">
+							<button type="button" id="getReOcp" class="close" data-dismiss="modal" style="font-size: 30px;">
+        					<span aria-hidden="true">&times;</span>
+    				</button>
+							<div class="updateEqt-box">
+							
+									<h1 style="margin: 15px;width: 95%;">添加职业</h1>
+									<div class="updateEqt-box-left">
+										<span>
+									<h4 style="color: #000000!important;">职业名称:</h4>
+									<input type="text" name="addOcpName" id="addOcpName" value="" placeholder="输入内容" class="form-control input-one">
+								</span>
+										<span>
+									<h4 style="color: #000000!important;">职业描述:</h4>
+									<textarea rows="7" name="addOcpAttribute" id="addOcpAttribute" style="margin: 0px -12px 0px 0px; width: 296px; height: 243px;" placeholder="输入内容" class="form-control"></textarea>
+								</span>
+									</div>
+									<span style="width: 100%;">
+									<input type="submit" id="addOcpBtn" value="添加" class="form-control box-btn" style="width: 45%;position: absolute;bottom: 12px;margin: 10px 22.5%!important;"/>
+								</span>
+								
+									<div class="updateEqt-box-right">
+										<img id="addOcpImage" src="" alt=""  />
+										选择图片<input type="file" id="addOcpImgFile" name="addOcpImgFile" accept="image/*">
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
 			<%
 				Object searchEqtResponse = request.getAttribute("searchEqtResponse");
@@ -415,6 +506,17 @@
 			%>
 			<script type="text/javascript">
 				$('#getEqtDialog').modal('show');
+			</script>
+			<%}} %>
+			
+			<%
+				Object searchOcpResponse = request.getAttribute("searchOcpResponse");
+				if(searchOcpResponse!=null){
+					int i =(Integer)searchOcpResponse;
+					if(i==1){
+			%>
+			<script type="text/javascript">
+				$('#getOcpDialog').modal('show');
 			</script>
 			<%}} %>
 
@@ -483,7 +585,7 @@
 					$('#mEquipmentCon2').click();
 				}, 1000);
 			</script>
-			<%}else{ %>
+			<%}else if(i==2){ %>
 				<script type="text/javascript">
 					layer.msg('删除装备成功');
 					setTimeout(function() {
@@ -491,6 +593,28 @@
 					}, 1000);
 				</script>
 			<%} }%>
+			
+			<%
+				Object ocpReturnMessage = request.getAttribute("ocpReturnMessage");
+				if(ocpReturnMessage!=null){
+					int i = (Integer)ocpReturnMessage;
+					if(i==1){
+			%>
+			<script type="text/javascript">
+				layer.msg('修改成功');
+				setTimeout(function() {
+					$('#mOccupationCon2').click();
+				}, 1000);
+			</script>
+			<%}else if(i==2){ %>
+			<script type="text/javascript">
+				layer.msg('删除成功');
+				setTimeout(function() {
+					$('#mOccupationCon2').click();
+				}, 1000);
+			</script>
+			<%}} %>
+			
 		</div>
 	</body>
 
