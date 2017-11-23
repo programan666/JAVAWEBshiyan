@@ -23,7 +23,7 @@ public class TestRolDao {
 	}
 	
 	@Test
-	public void getCount() throws SQLException{
+	public void getCount1() throws SQLException{
 		String sql="select count(*) from rol where rol_name='È¾ºìËêÔÂ'";
 		int i = roldao.getcount(sql);
 		System.out.println(i);
@@ -33,5 +33,18 @@ public class TestRolDao {
 	public void rolNameIsExit() throws SQLException{
 		boolean i = roldao.rolNameIsExit("È¾ºìËêÔÂ");
 		System.out.println(i);
+	}
+	
+	@Test
+	public void getCount2() throws SQLException{
+		Rol rol = new Rol(0,"¾ÅÁú±ùÊÒ","","","","", null, regdao.queryById(147), ocpdao.queryById(22));
+		int i = roldao.getcount(rol);
+		System.out.println(i);
+	}
+	
+	@Test
+	public void getByCondition() throws SQLException{
+		Rol rol = new Rol(0,"Ä¨ºÚÇà´º","","","","", null, regdao.queryById(147), ocpdao.queryById(22));
+		System.out.println("haha: "+roldao.getByCondition(rol, 1, 3));
 	}
 }

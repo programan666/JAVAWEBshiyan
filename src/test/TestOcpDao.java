@@ -29,4 +29,9 @@ public class TestOcpDao {
 		}
 	}
 	
+	@Test
+	public void queryById() throws SQLException{
+		System.out.println(ocpdao.queryById(66));
+	}
+	
 }

@@ -77,7 +77,7 @@ public class RegDaoImp implements RegDao{
 			
 			rs.close();
 			pstmt.close();
-			conn.close();
+			//conn.close();
 			
 			return reg;
 		}

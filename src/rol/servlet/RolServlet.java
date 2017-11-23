@@ -32,7 +32,8 @@ public class RolServlet extends HttpServlet {
 		RolDao roldao = DAOFactory.instance().getRolDao();
 		PicDao picdao = DAOFactory.instance().getPicDao();
 		int option = Integer.parseInt(request.getParameter("option"));
-		
+		String mBlock = "style='display:block'";
+		String mNone = "style='display:none'";
 		switch(option){
 		
 		case 1:
@@ -107,6 +108,14 @@ public class RolServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			break;
+			
+		case 3:
+			//查询角色(大区，职业，名字)
+			
+			request.setAttribute("mRolBlock", mBlock);
+			request.setAttribute("mStartNone", mNone);
+			request.getRequestDispatcher("manager.jsp").forward(request, response);
 			break;
 		
 		}

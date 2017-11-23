@@ -4,12 +4,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import commen.DAOFactory;
 import commen.DbUtil;
+import ocp.dao.OcpDao;
+import pic.dao.PicDao;
+import reg.dao.RegDao;
 import rol.pojo.Rol;
 
 public class RolDaoImp implements RolDao{
-
+		RegDao regdao = DAOFactory.instance().getRegDao();
+		OcpDao ocpdao = DAOFactory.instance().getOcpDao();
+		PicDao picdao = DAOFactory.instance().getPicDao();
 	//插入角色
 		public void insert(Rol rol) throws SQLException{
 			Connection conn = DbUtil.getConnection();
@@ -31,7 +38,7 @@ public class RolDaoImp implements RolDao{
 		//得到已存在个数
 		public int getcount(String sql) throws SQLException{
 			Connection conn = DbUtil.getConnection();
-			String newsql = "select count(*)"+sql.substring(sql.indexOf("from"));
+			String newsql = "select count(*) "+sql.substring(sql.indexOf("from"));
 			PreparedStatement pstmt = conn.prepareStatement(newsql);
 			ResultSet rs = pstmt.executeQuery();
 			int count = 0;
@@ -67,5 +74,60 @@ public class RolDaoImp implements RolDao{
 			int count = getcount(sql);
 			return count==1;
 		}
-	
+		
+		//根据条件查询
+		public ArrayList<Rol> getByCondition(String sql) throws SQLException{
+			return getByCondition(sql, 0, Integer.MAX_VALUE);
+		}
+		
+		public ArrayList<Rol> getByCondition(String sql,int start,int over) throws SQLException{
+			Connection conn = DbUtil.getConnection();
+			System.out.println(sql);
+			String newsql = sql+")  where  rn  between  "+start+" and  "+over;
+			System.out.println(newsql);
+			PreparedStatement pstmt = conn.prepareStatement(newsql);
+			ResultSet rs = pstmt.executeQuery();
+			ArrayList<Rol> rolList = new ArrayList<Rol>();
+			while(rs.next()){
+				Rol rol = new Rol(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),
+						picdao.queryById(rs.getInt(7)),regdao.queryById(rs.getInt(8)),ocpdao.queryById(rs.getInt(9)));
+				rolList.add(rol);
+			}
+			rs.close();
+			pstmt.close();
+			conn.close();
+			return rolList;
+		}
+		
+		public ArrayList<Rol> getByCondition(Rol rol, int start,int over) throws SQLException{
+			String sql = "select *  from(select r.*,rownum rn  from rol r where ";
+			if(!(rol.getRolName()==null||"".equals(rol.getRolName())))
+				sql += "and rol_name like '%"+rol.getRolName()+"%' ";
+			if(!(rol.getReg()==null||"".equals(rol.getReg())))
+				sql += "and rol_reg_id="+rol.getReg().getRegId()+" ";
+			if(!(rol.getOcp()==null||"".equals(rol.getOcp())))
+				sql += "and rol_ocp_id="+rol.getOcp().getOcpId()+" ";
+			sql = sql.replace("where and", "where");
+			boolean f = sql.toString().equals("select *  from(select r.*,rownum rn  from rol r where ");
+			if(f){
+				sql = "select *  from(select r.*,rownum rn  from rol r ";
+			}
+			return getByCondition(sql, start, over);
+		}
+		
+		public int getcount(Rol rol) throws SQLException{
+			String sql = "select * from rol where ";
+			if(rol.getRolName()==null||"".equals(rol.getRolName()))
+				sql += "and rol_name like '%"+rol.getRolName()+"%' ";
+			if(!(rol.getReg()==null||"".equals(rol.getReg())))
+				sql += "and rol_reg_id="+rol.getReg().getRegId()+" ";
+			if(!(rol.getOcp()==null||"".equals(rol.getOcp())))
+				sql += "and rol_ocp_id="+rol.getOcp().getOcpId()+" ";
+			sql = sql.replace("where and", "where");
+			boolean f = sql.toString().equals("select * from rol where ");
+			if(f){
+				sql = "select * from rol";
+			}
+			return getcount(sql);
+		}
 }

@@ -57,7 +57,7 @@
 							<img src="images/logo.png" alt="斗战神" width="200" />
 						</a>
 						<a href="EqtServlet?option=1" id="mEquipmentCon" class="manager-title"><span id="mEquipmentCon2">装备设置</span></a>
-						<a href="#" onclick="return false" id="mPlayerCon" class="manager-title"><span id="mPlayerCon2">角色管理</span></a>
+						<a href="RolServlet?option=3" id="mPlayerCon" class="manager-title"><span id="mPlayerCon2">角色管理</span></a>
 
 					</div>
 					<p id="loginInfo" class="loginInfo">
@@ -150,7 +150,8 @@
 						
 					</div>
 
-					<div id="m-player" class="m-player">
+					<div id="m-player" class="m-player" ${mRolBlock}>
+						
 						<table class="table table-hover region-table">
 							<thead>
 								<tr>

@@ -57,7 +57,7 @@ public class OcpDaoImp implements OcpDao{
 		}
 		rs.close();
 		pstmt.close();
-		conn.close();
+		//conn.close();
 		return ocp;
 	}
 	
