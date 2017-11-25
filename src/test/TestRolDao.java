@@ -18,7 +18,7 @@ public class TestRolDao {
 	OcpDao ocpdao = DAOFactory.instance().getOcpDao();
 	@Test
 	public void insert() throws SQLException{
-		Rol rol = new Rol("染红岁月","firstrole","666666","849740574@qq.com","感觉自己萌萌哒",picdao.queryById(41),regdao.queryById(142),ocpdao.queryById(21));
+		Rol rol = new Rol("染红岁月","firstrole","666666","849740574@qq.com","感觉自己萌萌哒",picdao.queryById(41),regdao.queryById(142),ocpdao.queryById(21),100);
 		roldao.insert(rol);
 	}
 	
@@ -37,14 +37,14 @@ public class TestRolDao {
 	
 	@Test
 	public void getCount2() throws SQLException{
-		Rol rol = new Rol(0,"九龙冰室","","","","", null, regdao.queryById(147), ocpdao.queryById(22));
+		Rol rol = new Rol(0,"染红岁月","","","","", null, null, null,0);
 		int i = roldao.getcount(rol);
 		System.out.println(i);
 	}
 	
 	@Test
 	public void getByCondition() throws SQLException{
-		Rol rol = new Rol(0,"抹黑青春","","","","", null, regdao.queryById(147), ocpdao.queryById(22));
+		Rol rol = new Rol(0,"抹黑青春","","","","", null, regdao.queryById(147), ocpdao.queryById(22),0);
 		System.out.println("haha: "+roldao.getByCondition(rol, 1, 3));
 	}
 }

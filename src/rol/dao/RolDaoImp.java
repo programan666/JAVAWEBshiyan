@@ -90,7 +90,7 @@ public class RolDaoImp implements RolDao{
 			ArrayList<Rol> rolList = new ArrayList<Rol>();
 			while(rs.next()){
 				Rol rol = new Rol(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),
-						picdao.queryById(rs.getInt(7)),regdao.queryById(rs.getInt(8)),ocpdao.queryById(rs.getInt(9)));
+						picdao.queryById(rs.getInt(7)),regdao.queryById(rs.getInt(8)),ocpdao.queryById(rs.getInt(9)),rs.getInt(10));
 				rolList.add(rol);
 			}
 			rs.close();
@@ -117,7 +117,7 @@ public class RolDaoImp implements RolDao{
 		
 		public int getcount(Rol rol) throws SQLException{
 			String sql = "select * from rol where ";
-			if(rol.getRolName()==null||"".equals(rol.getRolName()))
+			if(!(rol.getRolName()==null||"".equals(rol.getRolName())))
 				sql += "and rol_name like '%"+rol.getRolName()+"%' ";
 			if(!(rol.getReg()==null||"".equals(rol.getReg())))
 				sql += "and rol_reg_id="+rol.getReg().getRegId()+" ";

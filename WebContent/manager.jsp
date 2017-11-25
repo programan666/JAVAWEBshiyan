@@ -5,6 +5,7 @@
 <%@page import="eqt.pojo.Eqt"%>
 <%@page import="ocp.pojo.Ocp"%>
 <%@page import="pic.pojo.Pic"%>
+<%@page import="rol.pojo.Rol"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -57,7 +58,7 @@
 							<img src="images/logo.png" alt="斗战神" width="200" />
 						</a>
 						<a href="EqtServlet?option=1" id="mEquipmentCon" class="manager-title"><span id="mEquipmentCon2">装备设置</span></a>
-						<a href="RolServlet?option=3" id="mPlayerCon" class="manager-title"><span id="mPlayerCon2">角色管理</span></a>
+						<a href="RolServlet?option=3" id="mPlayerCon" class="manager-title"><span id="mPlayerCon2">角色查询</span></a>
 
 					</div>
 					<p id="loginInfo" class="loginInfo">
@@ -151,45 +152,119 @@
 					</div>
 
 					<div id="m-player" class="m-player" ${mRolBlock}>
-						
+						<div class="searchBox">
+							<form onsubmit="return true;" action="RolServlet" name="searchRolform" id="searchRolform" method="post">
+							<input type="hidden" id="option" name="option" value='4'>
+							<input type="hidden" id="searchfrom" name="searchfrom" value='1'>
+							<input type="hidden" id="searchto" name="searchto" value='6'>
+							<span class="searchCondition">昵称:
+								<input type="text" name="rolNameForSearch" id="rolNameForSearch" value="${rolName }" placeholder="输入内容" class="form-control" style="width: 150px">
+							</span>
+							<span class="searchCondition">职业:
+								<select id="rolOcpForSearch" name="rolOcpForSearch" value="" class="form-control" style="width: 150px">
+									<option value="0">所有职业</option>
+								<%
+									Object ocplist = (Object)request.getAttribute("ocpList");
+									if(ocplist!=null){
+										ArrayList<Ocp> allocp = (ArrayList<Ocp>)ocplist;
+										for(Ocp ocp:allocp){
+								%>
+									<option value="<%=ocp.getOcpId() %>"><%=ocp.getOcpName() %></option>
+								<%} }%>
+                				</select>
+							</span>
+							
+							<span class="searchCondition">大区:
+								<select id="rolRegForSearch" name="rolRegForSearch" value="" class="form-control" style="width: 150px">
+									<option value="0">所有大区</option>
+								<%
+									Object reglist = (Object)request.getAttribute("regList");
+									if(reglist!=null){
+										ArrayList<Reg> allreg = (ArrayList<Reg>)reglist;
+										for(Reg reg:allreg){
+								%>
+									<option value="<%=reg.getRegId() %>"><%=reg.getRegName() %></option>
+								<%} }%>
+                				</select>
+							</span>
+							
+							<span class="searchCondition">
+								<input type="submit" id="searchRolBtn" value="查找" class="form-control box-btn" style="width: 100px;"/>
+							</span>
+						</div>
+						<%
+								ArrayList<Rol> rolList = (ArrayList<Rol>)request.getAttribute("rolList");
+								
+								if(rolList!=null){
+																	
+							%>
+						<div style="width: 100%;height: 380px;">
 						<table class="table table-hover region-table">
 							<thead>
 								<tr>
-									<th>玩家编号</th>
-									<th>玩家名称</th>
-									<th>玩家操作</th>
+									<th>昵称</th>
+									<th>账号</th>
+									<th>密码</th>
+									<th>邮箱</th>
+									<th>职业</th>
+									<th>大区</th>
+									<th>战力</th>
 								</tr>
 							</thead>
 							<tbody>
+							<%
+								for(Rol rol:rolList){	
+							%>
 								<tr>
-									<td>1</td>
-									<td>Mark</td>
-									<td>
-										<button type="button" class="btn btn-warning">修改</button>
-										<button type="button" class="btn btn-danger">删除</button>
-									</td>
+									<td><%=rol.getRolName() %></td>
+									<td><%=rol.getRolLoginName() %></td>
+									<td><%=rol.getRolPwd() %></td>
+									<td><%=rol.getRolEmail() %></td>
+									<td><%=rol.getOcp().getOcpName() %></td>
+									<td><%=rol.getReg().getRegName() %></td>
+									<td><%=rol.getRolPower() %></td>
 								</tr>
-								<tr>
-									<td>2</td>
-									<td>Jacob</td>
-									<td>
-										<button type="button" class="btn btn-warning">修改</button>
-										<button type="button" class="btn btn-danger">删除</button>
-									</td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>Larry</td>
-									<td>
-										<button type="button" class="btn btn-warning">修改</button>
-										<button type="button" class="btn btn-danger">删除</button>
-									</td>
-								</tr>
+							<%} %>
 							</tbody>
 						</table>
-						<div class="col-md-offset-9 col-md-3">
-							<a href="#" class="btn btn-success btn-block" data-toggle="modal" data-target="#addReg-dialog">添加玩家</a>
 						</div>
+						<%
+							Object rolCounts = request.getAttribute("rolCount");
+							Object rolOcpIds = request.getAttribute("rolOcpId");
+							Object rolRegIds = request.getAttribute("rolRegId");
+							Object rolNames = request.getAttribute("rolName");
+							Object nowPages = request.getAttribute("nowPage");
+							int rolOcpId = (Integer)rolOcpIds;
+							int rolRegId = (Integer)rolRegIds;
+							int nowPage = (Integer)nowPages;
+							String rolName = (String)rolNames;
+							if(rolCounts!=null){
+								int rolCount = (Integer)rolCounts;
+								int pageNum;
+								if((rolCount%6)==0)
+									pageNum = rolCount/6;
+								else
+									pageNum = rolCount/6+1;
+						%>
+						<div class="searchPage">
+							<%
+								if(nowPage!=1){
+							%>
+							<a href="RolServlet?option=4&&rolNameForSearch=<%=rolName %>&&rolOcpForSearch=<%=rolOcpId %>&&rolRegForSearch=<%=rolRegId %>&&searchfrom=<%=6*(nowPage-2)+1 %>&&searchto=<%=6*(nowPage-1) %>">&lt;上一页</a>
+							<%}
+								for(int i=1;i<=pageNum;i++){
+									int n = 6*(i-1)+1;
+									int m = 6*i;
+									System.out.println("参数1:"+rolName+"  2:"+rolOcpId+"  3:"+rolRegId+"  4:"+n+"  5:"+m);
+							%>
+							<a href="RolServlet?option=4&&rolNameForSearch=<%=rolName %>&&rolOcpForSearch=<%=rolOcpId %>&&rolRegForSearch=<%=rolRegId %>&&searchfrom=<%=n %>&&searchto=<%=m %>"><%=i %></a>
+							<%} if(nowPage!=pageNum){%>
+							<a href="RolServlet?option=4&&rolNameForSearch=<%=rolName %>&&rolOcpForSearch=<%=rolOcpId %>&&rolRegForSearch=<%=rolRegId %>&&searchfrom=<%=6*nowPage+1 %>&&searchto=<%=6*(nowPage+1) %>">下一页&gt;</a>
+							<%} %>
+						</div>
+						
+						
+						<%} }%>
 					</div>
 
 					<div id="m-personalInfo" class="m-personalInfo" ${mPinfoBlock }>
@@ -616,6 +691,31 @@
 			</script>
 			<%}} %>
 			
+			<%
+				Object searchReturnmessage = request.getAttribute("searchReturnmessage");
+				if(searchReturnmessage!=null){
+					int i = (Integer)searchReturnmessage;
+					if(i==6){
+						Object rolOcpIds = request.getAttribute("rolOcpId");
+						Object rolRegIds = request.getAttribute("rolRegId");
+						int rolOcpId = (Integer)rolOcpIds;
+						int rolRegId = (Integer)rolRegIds;
+			%>
+				<script type="text/javascript">
+				function jsSelectItemByValue(objSelect,objItemText) {    
+			        for(var i=0;i<objSelect.options.length;i++) {    
+			            if(objSelect.options[i].value == objItemText) {    
+			                objSelect.options[i].selected = true;    
+			               break;    
+			           }    
+			         }    
+			 	}
+				var selectedValue1 = "<%=rolOcpId %>";  
+				var selectedValue2 = "<%=rolRegId %>";  
+				jsSelectItemByValue(document.getElementById("rolOcpForSearch"),selectedValue1);  
+				jsSelectItemByValue(document.getElementById("rolRegForSearch"),selectedValue2);  
+			</script>
+			<%} } %>
 		</div>
 	</body>
 

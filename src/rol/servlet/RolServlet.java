@@ -70,7 +70,7 @@ public class RolServlet extends HttpServlet {
 				if(!emailExit){
 					if(!loginNameExit){
 						if(!nameExit){
-							Rol rol = new Rol(rolName,rolLoginName,rolPwd,rolEmail,rolMood,picdao.queryById(86),regdao.queryById(rolRegSelected),ocpdao.queryByName(rolOcpName));
+							Rol rol = new Rol(rolName,rolLoginName,rolPwd,rolEmail,rolMood,picdao.queryById(86),regdao.queryById(rolRegSelected),ocpdao.queryByName(rolOcpName),100);
 							roldao.insert(rol);
 							response.sendRedirect("role.jsp");
 							break;
@@ -111,11 +111,54 @@ public class RolServlet extends HttpServlet {
 			break;
 			
 		case 3:
-			//查询角色(大区，职业，名字)
+			//获得大区，职业列表
+			try {
+				ArrayList<Ocp> ocpList = ocpdao.query();
+				ArrayList<Reg> regList = regdao.query();
+				request.setAttribute("ocpList", ocpList);
+				request.setAttribute("regList", regList);
+				request.setAttribute("mRolBlock", mBlock);
+				request.setAttribute("mStartNone", mNone);
+				request.getRequestDispatcher("manager.jsp").forward(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
 			
-			request.setAttribute("mRolBlock", mBlock);
-			request.setAttribute("mStartNone", mNone);
-			request.getRequestDispatcher("manager.jsp").forward(request, response);
+		case 4:
+			//根据条件查找rol
+			try {
+				String rolName = request.getParameter("rolNameForSearch");
+				int rolOcpId = Integer.parseInt(request.getParameter("rolOcpForSearch"));
+				int rolRegId = Integer.parseInt(request.getParameter("rolRegForSearch"));
+				int searchfrom = Integer.parseInt(request.getParameter("searchfrom"));
+				int searchto = Integer.parseInt(request.getParameter("searchto"));
+				int searchReturnmessage = 6;
+				System.out.println(rolName+"  "+rolOcpId+"  "+rolRegId);
+				Rol rol = new Rol(0,rolName,"","","","",null,regdao.queryById(rolRegId),ocpdao.queryById(rolOcpId),0);
+				int rolCount = roldao.getcount(rol);//查找到的角色个数
+				int nowPage = searchto/6;
+				System.out.println("符合条件的角色有 "+rolCount+" 个");
+				ArrayList<Rol> rolList = roldao.getByCondition(rol, searchfrom, searchto);
+				ArrayList<Ocp> ocpList = ocpdao.query();
+				ArrayList<Reg> regList = regdao.query();
+				request.setAttribute("ocpList", ocpList);
+				request.setAttribute("regList", regList);
+				request.setAttribute("rolList", rolList);
+				request.setAttribute("rolName", rolName);
+				request.setAttribute("rolOcpId", rolOcpId);
+				request.setAttribute("rolRegId", rolRegId);
+				request.setAttribute("rolCount", rolCount);
+				request.setAttribute("nowPage", nowPage);
+				request.setAttribute("searchReturnmessage", searchReturnmessage);
+				request.setAttribute("mRolBlock", mBlock);
+				request.setAttribute("mStartNone", mNone);
+				request.getRequestDispatcher("manager.jsp").forward(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 		
 		}

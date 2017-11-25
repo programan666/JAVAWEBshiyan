@@ -464,6 +464,46 @@ a:active {
 	float: right;
 }
 
+.searchCondition{
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 20px;
+	display: inline-block;
+	margin-left: 15px;
+}
+
+.searchCondition .form-control{
+	display: inline-block;
+}
+
+.searchBox{
+	width: 800px;
+	margin: 20px auto;
+	vertical-align: middle;
+}
+
+.searchPage{
+	text-align: center;
+	margin: 20px auto;
+	vertical-align: middle;
+	font-size: 20px;
+}
+
+.searchPage a{
+	display: inline-block;
+	height: 50px;
+	padding: 15px;
+	color: #FFFFFF;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.searchPage a:hover{
+	color: #86CE2F;
+	background-color: rgba(255, 255, 255, 0.4);
+}
+
+
+
 @-webkit-keyframes mCon {
 	0% {
 		opacity: 0;
