@@ -502,7 +502,151 @@ a:active {
 	background-color: rgba(255, 255, 255, 0.4);
 }
 
+.userInfo{
+	width: 100%;
+	text-align: center;
+}
 
+.menu{
+	width: 100%;
+	text-align: center;
+}
+
+.user-pic{
+	width: 200px;
+	height: 200px;
+	margin: 10px auto;
+	text-align: center;
+	border-radius: 50%;
+	border: 5px solid #FFCE44;
+	overflow: hidden;
+}
+
+.user-name{
+	font-size: 20px;
+	color: #FFFFFF;
+	font-weight: bold;
+	background: none;
+    border: none;
+    text-align: center;
+    width: 70%;
+}
+
+.menu-a{
+	display: block;
+	height: 80px;
+	width: 100%;
+	color: #FFFFFF;
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 80px;
+	border-top: #FFCE44 1px solid;
+	border-bottom: #FFCE44 1px solid;
+}
+
+.menu-a:hover{
+	background: url(../images/menu-hover.png) repeat;
+	color: #461B2A;
+}
+
+.user-title,.user-detail,.user-ocp,.user-mood{
+	width: 100%;
+	color: #FFFFFF;
+	text-align: center;
+}
+
+.user-title{
+	height: 100px;
+	line-height: 100px;
+	font-size: 33px;
+    font-weight: bold;
+    color: #DA6ACE;
+}
+
+.user-detail span{
+	display: block;
+	color: #FFCE44;
+	font-weight: bold;
+	font-size: 20px;
+	height: 40px;
+	line-height: 40px;
+	padding-left: 90px;
+	text-align: left;
+}
+
+.user-ocp{
+	margin: 20px 0;
+}
+
+.user-mood{
+	color: #DA6ACE;
+	font-size: 20px;
+}
+
+.user-update{
+	width: 37%;
+    margin: 200px auto;
+    text-align: right;
+}
+
+.user-update span{
+	text-align: center;
+	margin: 20px 0;
+}
+
+.user-update span h1{
+	color: #FFFFFF;
+}
+
+.user-update span h1,.user-update span input{
+	display: inline-block;
+}
+
+.delete-rol-btn{
+	display: block;
+	margin: 100px auto;
+	width: 200px;
+	height: 100px;
+	border-radius: 20px;
+	border: 2px #FFFFFF solid;
+	color: #FFFFFF;
+	line-height: 100px;
+    text-align: center;
+    font-size: 30px;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.some-bb{
+	display: block;
+	height: 150px;
+	font-size: 100px;
+	line-height: 150px;
+	color: #F04708;
+	text-align: center;
+	margin: 50px auto;
+	font-weight: bold;
+}
+
+.delet-bb-box{
+	width: 100%;
+	margin: 50px auto;
+	text-align: center;
+}
+
+.delet-bb-btn{
+	display: inline-block;
+    background-color: #438BCA;
+    height: 40px;
+    width: 100px;
+    border-radius: 7px;
+    line-height: 40px;
+    color: #FFFFFF;
+}
+
+.mood-tex{
+	border: none;
+	background: none;
+}
 
 @-webkit-keyframes mCon {
 	0% {

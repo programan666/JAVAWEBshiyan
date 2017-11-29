@@ -13,6 +13,11 @@ import rol.pojo.Rol;
 public interface RolDao {	
 	
 	public void insert(Rol rol) throws SQLException;
+	public void delete(int rolId) throws SQLException;
+	public int checkLogin(String mngLoginName,String mngPwd) throws SQLException;
+	public Rol queryById(int rolId) throws SQLException;
+	public Rol queryByLoginName(String rolLoginName) throws SQLException;
+	public void update(Rol rol) throws SQLException;
 	public int getcount(String sql) throws SQLException;
 	public boolean rolNameIsExit(String rolName) throws SQLException;
 	public boolean rolLoginNameIsExit(String rolLoginName) throws SQLException;

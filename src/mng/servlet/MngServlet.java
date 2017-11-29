@@ -16,6 +16,8 @@ import mng.dao.MngDao;
 import mng.pojo.Mng;
 import reg.dao.RegDao;
 import reg.pojo.Reg;
+import rol.dao.RolDao;
+import rol.pojo.Rol;
 
 
 public class MngServlet extends HttpServlet {
@@ -31,6 +33,7 @@ public class MngServlet extends HttpServlet {
 		int option = Integer.parseInt(request.getParameter("option"));
 		MngDao mngdao = DAOFactory.instance().getMngDao();
 		RegDao regdao = DAOFactory.instance().getRegDao();
+		RolDao roldao = DAOFactory.instance().getRolDao();
 
 		//自身操作
 		String mBlock = "style='display:block'";
@@ -46,9 +49,41 @@ public class MngServlet extends HttpServlet {
 				try {
 					int loginResult = mngdao.checkLogin(loginName, pwd);
 					if(loginResult==3){		
-						session.setAttribute("mngLoginName", loginName);
-						session.setAttribute("mngPwd",pwd);
+						Mng mng = mngdao.queryByLoginName(loginName);
+						session.setAttribute("loginMng", mng);
 						response.sendRedirect("manager.jsp");
+						return;
+					}
+					else if(loginResult==2){
+						String errorMessage = "密码错误";
+						request.setAttribute("errorMessage", errorMessage);
+						request.setAttribute("LoginName", loginName);
+						request.setAttribute("loginType", loginType);
+						request.setAttribute("mBlock", mBlock);
+						request.setAttribute("loginResult", loginResult);
+						request.getRequestDispatcher("login.jsp").forward(request, response);
+					}
+					else if(loginResult==1){
+						String errorMessage = "用户名不存在";
+						request.setAttribute("errorMessage", errorMessage);
+						request.setAttribute("LoginName", loginName);
+						request.setAttribute("loginType", loginType);
+						request.setAttribute("mBlock", mBlock);
+						request.setAttribute("loginResult", loginResult);
+						request.getRequestDispatcher("login.jsp").forward(request, response);
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else if(loginType.equals("player")){
+				try {
+					int loginResult = roldao.checkLogin(loginName, pwd);
+					if(loginResult==3){		
+						Rol rol = roldao.queryByLoginName(loginName);
+						session.setAttribute("rolInfo", rol);
+						response.sendRedirect("role.jsp");
 						return;
 					}
 					else if(loginResult==2){
@@ -77,6 +112,7 @@ public class MngServlet extends HttpServlet {
 		
 			
 		case 2:
+			//修改密码
 			String mngloginName = (String)session.getAttribute("mngLoginName");
 			String lpassWord = request.getParameter("lpassWord");
 			String xpassWord = request.getParameter("xpassWord");
@@ -115,6 +151,7 @@ public class MngServlet extends HttpServlet {
 			
 			
 		case 3:
+			//查询所有大区
 			try {
 				ArrayList<Reg> list = regdao.query();
 				request.setAttribute("regList", list);
@@ -128,6 +165,7 @@ public class MngServlet extends HttpServlet {
 			break;
 			
 		case 4:
+			//添加大区
 			try {
 				String regName = request.getParameter("addRegName");
 				Reg reg = new Reg(regName);
@@ -144,6 +182,7 @@ public class MngServlet extends HttpServlet {
 			break;	
 			
 		case 5:
+			//得到所选大区
 			try {
 				int regId = Integer.parseInt(request.getParameter("regId"));
 				int i = 1;
@@ -162,6 +201,7 @@ public class MngServlet extends HttpServlet {
 			break;
 			
 		case 6:
+			//删除大区
 			try {
 				int regId = Integer.parseInt(request.getParameter("regId"));
 				int i = 1;
@@ -177,6 +217,7 @@ public class MngServlet extends HttpServlet {
 			break;
 		
 		case 7:
+			//修改大区信息
 			try {
 				int regId = Integer.parseInt(request.getParameter("updateRegId"));
 				int i = 1;

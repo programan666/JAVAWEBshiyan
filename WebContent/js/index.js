@@ -173,6 +173,8 @@ $('document').ready(function(){
 	});
 	
 	
+	
+	
 });
 
 
@@ -295,6 +297,26 @@ function checkUpdateOcp(){
 	var updateOcpAttribute = $('#updateOcpAttribute').val();
 	if(updateOcpName!=''&&updateOcpName&&updateOcpAttribute!=''&&updateOcpAttribute){
 		return true;
+	}
+	else{
+		layer.msg('信息不能为空');
+		return false;
+	}
+}
+
+function checkRolPwd(){
+	var rolOldPwd = $('#rolOldPwd').val();
+	var rolNewPwd = $('#rolNewPwd').val();
+	var rolNewPwd2 = $('#rolNewPwd2').val();
+/*	alert("rolOldPwd："+rolOldPwd+"  rolNewPwd："+rolNewPwd+"  rolNewPwd2："+rolNewPwd2);*/
+	if(rolOldPwd!=''&&rolOldPwd&&rolNewPwd!=''&&rolNewPwd&&rolNewPwd2!=''&&rolNewPwd2){
+		if(rolNewPwd2==rolNewPwd){
+			return true;
+		}
+		else{
+			layer.msg('两次输入密码不一致');
+			return false;
+		}
 	}
 	else{
 		layer.msg('信息不能为空');

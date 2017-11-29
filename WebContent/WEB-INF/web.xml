@@ -4,6 +4,22 @@
   <welcome-file-list>
     <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
+  <filter>
+    <filter-name>mngLoginFilter</filter-name>
+    <filter-class>filter.mngLoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>roleLoginFilter</filter-name>
+    <url-pattern>/role.jsp</url-pattern>
+  </filter-mapping>
+   <filter>
+    <filter-name>roleLoginFilter</filter-name>
+    <filter-class>filter.roleLoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>mngLoginFilter</filter-name>
+    <url-pattern>/manager.jsp</url-pattern>
+  </filter-mapping>
   <servlet>
     <servlet-name>MngServlet</servlet-name>
     <servlet-class>mng.servlet.MngServlet</servlet-class>

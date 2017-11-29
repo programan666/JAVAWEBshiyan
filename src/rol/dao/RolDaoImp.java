@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import commen.DAOFactory;
 import commen.DbUtil;
+import mng.pojo.Mng;
 import ocp.dao.OcpDao;
 import pic.dao.PicDao;
 import reg.dao.RegDao;
@@ -17,10 +18,10 @@ public class RolDaoImp implements RolDao{
 		RegDao regdao = DAOFactory.instance().getRegDao();
 		OcpDao ocpdao = DAOFactory.instance().getOcpDao();
 		PicDao picdao = DAOFactory.instance().getPicDao();
-	//插入角色
+		//插入角色
 		public void insert(Rol rol) throws SQLException{
 			Connection conn = DbUtil.getConnection();
-			String sql = "insert into rol values (rol_seq.nextval,?,?,?,?,?,?,?,?)";
+			String sql = "insert into rol values (rol_seq.nextval,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, rol.getRolName());
 			pstmt.setString(2, rol.getRolLoginName());
@@ -30,7 +31,118 @@ public class RolDaoImp implements RolDao{
 			pstmt.setInt(6, rol.getPic().getPicId());
 			pstmt.setInt(7, rol.getReg().getRegId());
 			pstmt.setInt(8, rol.getOcp().getOcpId());
+			pstmt.setInt(9, rol.getRolPower());
 			pstmt.executeUpdate();
+			pstmt.close();
+			conn.close();
+		}
+		
+		//删除
+		public void delete(int rolId) throws SQLException{
+			Connection conn = DbUtil.getConnection();
+			String sql = "delete from rol where rol_id=?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1,rolId);
+			pstmt.executeUpdate();
+			pstmt.close();
+			conn.close();
+		}
+		
+		//判断登录
+		public int checkLogin(String rolLoginName,String rolPwd) throws SQLException{
+			Connection conn = DbUtil.getConnection();
+			String i = null;
+			String sql = "select rol_pwd from rol where rol_login_name=?";
+			PreparedStatement pstmt;
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, rolLoginName);
+				
+				ResultSet rs = pstmt.executeQuery();
+				
+				if(rs.next()){
+					i = rs.getString(1);
+				}
+				if(i.equals(rolPwd)){
+					rs.close();
+					pstmt.close();
+					conn.close();
+					return 3;
+				}
+				else{
+					rs.close();
+					pstmt.close();
+					conn.close();
+					System.out.println("密码错误");
+					return 2;
+				}
+			} catch (Exception e) {
+				conn.close();
+				// TODO Auto-generated catch block
+				System.out.println("用户名不存在");
+				return 1;
+			}
+			
+			
+		}
+		
+		//根据id查找
+		public Rol queryById(int rolId) throws SQLException{
+			Connection conn = DbUtil.getConnection();
+			String sql = "select * from rol where rol_id=?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, rolId);
+			ResultSet rs = pstmt.executeQuery();
+			Rol rol = null;
+			if(rs.next()){
+				rol = new Rol(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),
+						picdao.queryById(rs.getInt(7)),regdao.queryById(rs.getInt(8)),ocpdao.queryById(rs.getInt(9)),rs.getInt(10));
+			}
+			rs.close();
+			pstmt.close();
+			conn.close();
+			return rol;
+			
+		}
+		
+		//根据用户名查找
+		public Rol queryByLoginName(String rolLoginName) throws SQLException{
+			Connection conn = DbUtil.getConnection();
+			String sql = "select * from rol where rol_login_name=?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, rolLoginName);
+			ResultSet rs = pstmt.executeQuery();
+			Rol rol = null;
+			if(rs.next()){
+				rol = new Rol(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),
+						picdao.queryById(rs.getInt(7)),regdao.queryById(rs.getInt(8)),ocpdao.queryById(rs.getInt(9)),rs.getInt(10));
+			}
+			rs.close();
+			pstmt.close();
+			conn.close();
+			return rol;
+			
+		}
+		
+		//修改信息
+		public void update(Rol rol) throws SQLException{
+			Connection conn = DbUtil.getConnection();
+			String sql = "update rol set rol_id=?,rol_name=?,rol_login_name=?,rol_pwd=?,rol_email=?,rol_mood=?,rol_pic_id=?,rol_reg_id=?,rol_ocp_id=?,rol_power=? where rol_id=?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, rol.getRolId());
+			pstmt.setString(2, rol.getRolName());
+			pstmt.setString(3, rol.getRolLoginName());
+			pstmt.setString(4, rol.getRolPwd());
+			pstmt.setString(5, rol.getRolEmail());
+			pstmt.setString(6, rol.getRolMood());
+			pstmt.setInt(7, rol.getPic().getPicId());
+			pstmt.setInt(8, rol.getReg().getRegId());
+			pstmt.setInt(9, rol.getOcp().getOcpId());
+			pstmt.setInt(10, rol.getRolPower());
+			pstmt.setInt(11, rol.getRolId());
+			pstmt.executeUpdate();
+			
 			pstmt.close();
 			conn.close();
 		}

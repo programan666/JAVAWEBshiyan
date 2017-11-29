@@ -6,6 +6,7 @@
 <%@page import="ocp.pojo.Ocp"%>
 <%@page import="pic.pojo.Pic"%>
 <%@page import="rol.pojo.Rol"%>
+<%@page import="mng.pojo.Mng"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -61,10 +62,15 @@
 						<a href="RolServlet?option=3" id="mPlayerCon" class="manager-title"><span id="mPlayerCon2">角色查询</span></a>
 
 					</div>
+					<%
+						Mng loginMng = (Mng)session.getAttribute("loginMng");
+						if(loginMng!=null){
+					%>
 					<p id="loginInfo" class="loginInfo">
-						HELLO!<br> ${mngLoginName }<br>
+						HELLO!<br> <%=loginMng.getMngLoginName() %><br>
 						<a href="#" id="mPersonalInfoCon" style="font-size: 12px;font-weight:bold ;">修改密码</a></a>
 					</p>
+					<%} %>
 				</nav>
 
 				<div id="manager-body" name="manager-body" class="manager-body">
@@ -153,7 +159,7 @@
 
 					<div id="m-player" class="m-player" ${mRolBlock}>
 						<div class="searchBox">
-							<form onsubmit="return true;" action="RolServlet" name="searchRolform" id="searchRolform" method="post">
+							<form action="RolServlet" name="searchRolform" id="searchRolform" method="post">
 							<input type="hidden" id="option" name="option" value='4'>
 							<input type="hidden" id="searchfrom" name="searchfrom" value='1'>
 							<input type="hidden" id="searchto" name="searchto" value='6'>
@@ -191,6 +197,7 @@
 							<span class="searchCondition">
 								<input type="submit" id="searchRolBtn" value="查找" class="form-control box-btn" style="width: 100px;"/>
 							</span>
+							</form>
 						</div>
 						<%
 								ArrayList<Rol> rolList = (ArrayList<Rol>)request.getAttribute("rolList");
@@ -269,7 +276,7 @@
 
 					<div id="m-personalInfo" class="m-personalInfo" ${mPinfoBlock }>
 						<div class="info-center">
-							<form onsubmit="return checkPasswordOK();" action="MngServlet" name="loginform" id="loginform" method="post">
+							<form onsubmit="return checkPasswordOK();" action="MngServlet" name="updatemngpwdform" id="updatemngpwdform" method="post">
 								<input type="hidden" name="option" value="2" />
 								<span>
 									<h4>原始密码:</h4>

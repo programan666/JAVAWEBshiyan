@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import commen.DAOFactory;
 import ocp.dao.OcpDao;
@@ -27,6 +28,7 @@ public class RolServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession();
 		RegDao regdao = DAOFactory.instance().getRegDao();
 		OcpDao ocpdao = DAOFactory.instance().getOcpDao();
 		RolDao roldao = DAOFactory.instance().getRolDao();
@@ -72,6 +74,7 @@ public class RolServlet extends HttpServlet {
 						if(!nameExit){
 							Rol rol = new Rol(rolName,rolLoginName,rolPwd,rolEmail,rolMood,picdao.queryById(86),regdao.queryById(rolRegSelected),ocpdao.queryByName(rolOcpName),100);
 							roldao.insert(rol);
+							session.setAttribute("rolInfo", rol);
 							response.sendRedirect("role.jsp");
 							break;
 						}
@@ -160,7 +163,91 @@ public class RolServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			break;
+			
+		case 5:
+			//ÐÞ¸Ä½ÇÉ«ÃÜÂë
+			try {
+				int rolId = Integer.parseInt(request.getParameter("rolId"));
+				String oldPwd = request.getParameter("rolOldPwd");
+				String newPwd = request.getParameter("rolNewPwd");
+				int updateRolPwdReturn;
+				Rol rol = roldao.queryById(rolId);
+				if(oldPwd.equals(rol.getRolPwd())){
+					rol.setRolPwd(newPwd);
+					roldao.update(rol);
+					updateRolPwdReturn = 1;
+				}
+				else{
+					updateRolPwdReturn = 2;
+				}
+				request.setAttribute("updateRolPwdReturn", updateRolPwdReturn);
+				request.setAttribute("oldPwd", oldPwd);
+				request.setAttribute("newPwd", newPwd);
+				request.getRequestDispatcher("RolPwdInfo.jsp").forward(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+			
+		case 6:
+			//É¾³ý½ÇÉ«
+			try {
+				int rolId = Integer.parseInt(request.getParameter("rolId"));
+				int deleteRolReturn;
+				roldao.delete(rolId);
+				deleteRolReturn = 1;
+				request.getSession().removeAttribute("rolInfo");
+				response.sendRedirect("login.jsp");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
 		
+		case 7:
+			//×¢ÏúµÇÂ¼
+			request.getSession().removeAttribute("rolInfo");
+			response.sendRedirect("login.jsp");
+			break;
+			
+		case 8:
+			//Òì²½ÐÞ¸ÄêÇ³Æ
+			try {
+				String newRolName = request.getParameter("newRolName");
+				int rolId = Integer.parseInt(request.getParameter("rolId"));
+				System.out.println("newRolName is: "+newRolName+"  "+rolId);
+				Rol rol = roldao.queryById(rolId);
+				rol.setRolName(newRolName);
+				roldao.update(rol);
+				request.getSession().removeAttribute("rolInfo");
+				Rol newrol = roldao.queryById(rolId);
+				session.setAttribute("rolInfo", newrol);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+			
+		case 9:
+			//Òì²½ÐÞ¸ÄÐÄÇé
+			try {
+				String newRolMood = request.getParameter("newRolMood");
+				int rolId = Integer.parseInt(request.getParameter("rolId"));
+				System.out.println("newRolName is: "+newRolMood+"  "+rolId);
+				Rol rol = roldao.queryById(rolId);
+				rol.setRolMood(newRolMood);
+				roldao.update(rol);
+				request.getSession().removeAttribute("rolInfo");
+				Rol newrol = roldao.queryById(rolId);
+				session.setAttribute("rolInfo", newrol);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			break;
+			
 		}
 		
 	}
