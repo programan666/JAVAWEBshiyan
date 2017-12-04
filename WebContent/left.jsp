@@ -47,7 +47,7 @@
 	<div class="menu">
 		<a href="RolPwdInfo.jsp" target="main" class="menu-a" style="margin-top: 33px;">修改密码</a>
 		<a href="RolServlet?option=10" target="main" class="menu-a">管理装备</a>
-		<a href="" target="main" class="menu-a">切磋武艺</a>
+		<a href="PK.jsp" target="main" class="menu-a">切磋武艺</a>
 		<a href="RolDelet.jsp" target="main" class="menu-a">删除角色</a>
 		<a href="RolServlet?option=7" target="_top" class="menu-a">注销登录</a>
 	</div>

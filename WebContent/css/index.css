@@ -720,6 +720,7 @@ a:active {
 	width: 272px;
 	height: 264px;
 	border: 2px white solid;
+	background-color: rgba(0,0,0,0.4);
 }
 
 .showit{

@@ -22,6 +22,23 @@
 	</style>
 </head>
 <body>
-
+	<%
+		Object resultFlags = request.getAttribute("resultFlag");
+		if(resultFlags!=null){
+			int resultFlag = (Integer)resultFlags;
+			if(resultFlag==1){
+	%>
+		<script type="text/javascript">
+			layer.msg('平局');
+		</script>
+	<%}else if(resultFlag==2){ %>
+		<script type="text/javascript">
+			layer.msg('战败');
+		</script>
+		<%}else if(resultFlag==3){ %>
+		<script type="text/javascript">
+			layer.msg('胜利');
+		</script>
+	<%} }%>
 </body>
 </html>

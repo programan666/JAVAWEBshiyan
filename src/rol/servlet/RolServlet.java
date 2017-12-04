@@ -290,6 +290,68 @@ public class RolServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			break;
+			
+		case 12:
+			//返回所有角色到比武界面
+			try {
+				String rolName = request.getParameter("rolNameForSearch");
+				int rolOcpId = Integer.parseInt(request.getParameter("rolOcpForSearch"));
+				int rolRegId = Integer.parseInt(request.getParameter("rolRegForSearch"));
+				int searchfrom = Integer.parseInt(request.getParameter("searchfrom"));
+				int searchto = Integer.parseInt(request.getParameter("searchto"));
+				int searchReturnmessage = 6;
+				System.out.println(rolName+"  "+rolOcpId+"  "+rolRegId);
+				Rol rol = new Rol(0,rolName,"","","","",null,regdao.queryById(rolRegId),ocpdao.queryById(rolOcpId),0);
+				int rolCount = roldao.getcount(rol);//查找到的角色个数
+				int nowPage = searchto/6;
+				System.out.println("符合条件的角色有 "+rolCount+" 个");
+				ArrayList<Rol> rolList = roldao.getByCondition(rol, searchfrom, searchto);
+				ArrayList<Ocp> ocpList = ocpdao.query();
+				ArrayList<Reg> regList = regdao.query();
+				request.setAttribute("ocpList", ocpList);
+				request.setAttribute("regList", regList);
+				request.setAttribute("rolList", rolList);
+				request.setAttribute("rolName", rolName);
+				request.setAttribute("rolOcpId", rolOcpId);
+				request.setAttribute("rolRegId", rolRegId);
+				request.setAttribute("rolCount", rolCount);
+				request.setAttribute("nowPage", nowPage);
+				request.setAttribute("searchReturnmessage", searchReturnmessage);
+				request.getRequestDispatcher("PK.jsp").forward(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+			
+		case 13:
+			//切磋比武
+			try {
+				int selectesRolId = Integer.parseInt(request.getParameter("selectesRolId"));
+				int nowRolId = Integer.parseInt(request.getParameter("nowRolId"));
+				Rol selecteRol = roldao.queryById(selectesRolId);
+				Rol nowRol = roldao.queryById(nowRolId);
+				int sel = selecteRol.getRolPower();
+				int no = nowRol.getRolPower();
+				int resultFlag=-1;
+				if(sel==no){
+					resultFlag=1;//平手
+				}
+				else if(sel>no){
+					resultFlag=2;//战败
+				}
+				else if(sel<no){
+					resultFlag=3;//胜利
+				}
+				request.setAttribute("resultFlag", resultFlag);
+				request.getRequestDispatcher("main.jsp").forward(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			break;
 			
 		}
 		
