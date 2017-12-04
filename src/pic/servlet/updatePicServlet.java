@@ -65,8 +65,8 @@ public class updatePicServlet extends HttpServlet {
 			List<FileItem> list = upload.parseRequest(request);
 			
 			//获得图片id
-			String eqtPicIdd = list.get(0).getString();
-			int eqtPicId = Integer.parseInt(eqtPicIdd);
+			String picIdd = list.get(0).getString();
+			int picId = Integer.parseInt(picIdd);
 	/*		System.out.println("eqtPicId=" + eqtPicId);*/
 			
 			//获得文件对象
@@ -89,7 +89,7 @@ public class updatePicServlet extends HttpServlet {
 			//创建文件对象
 			File file = new File(uploadPath + File.separator + fullName);
 			
-			Pic oldPic = picdao.queryById(eqtPicId);
+			Pic oldPic = picdao.queryById(picId);
 			
 			Pic pic = new Pic(oldPic.getPicId(),oldPic.getPicName(),oldPic.getInfo(),(int)fileSize,is,new Date());
 			

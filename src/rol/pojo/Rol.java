@@ -1,5 +1,6 @@
 package rol.pojo;
 
+import eqt.pojo.Eqt;
 import ocp.pojo.Ocp;
 import pic.pojo.Pic;
 import reg.pojo.Reg;
@@ -15,36 +16,15 @@ public class Rol {
 	private Reg reg;
 	private Ocp ocp;
 	private int rolPower;
+	private Eqt eqt;
 	
 	
 	
-	public Rol(int rolId, String rolName, String rolLoginName, String rolPwd, String rolEmail, String rolMood,
-			int rolPower) {
+	
+	public Rol() {
 		super();
-		this.rolId = rolId;
-		this.rolName = rolName;
-		this.rolLoginName = rolLoginName;
-		this.rolPwd = rolPwd;
-		this.rolEmail = rolEmail;
-		this.rolMood = rolMood;
-		this.rolPower = rolPower;
 	}
 
-
-
-	public Rol(String rolName, String rolLoginName, String rolPwd, String rolEmail, String rolMood, Pic pic, Reg reg,
-			Ocp ocp, int rolPower) {
-		super();
-		this.rolName = rolName;
-		this.rolLoginName = rolLoginName;
-		this.rolPwd = rolPwd;
-		this.rolEmail = rolEmail;
-		this.rolMood = rolMood;
-		this.pic = pic;
-		this.reg = reg;
-		this.ocp = ocp;
-		this.rolPower = rolPower;
-	}
 
 
 
@@ -53,6 +33,7 @@ public class Rol {
 		this.rolId = rolId;
 	}
 
+	
 
 
 	public Rol(int rolId, String rolName, String rolLoginName, String rolPwd, String rolEmail, String rolMood, Pic pic,
@@ -72,9 +53,41 @@ public class Rol {
 
 
 
-	public Rol() {
+
+	public Rol(String rolName, String rolLoginName, String rolPwd, String rolEmail, String rolMood, Pic pic, Reg reg,
+			Ocp ocp, int rolPower, Eqt eqt) {
 		super();
+		this.rolName = rolName;
+		this.rolLoginName = rolLoginName;
+		this.rolPwd = rolPwd;
+		this.rolEmail = rolEmail;
+		this.rolMood = rolMood;
+		this.pic = pic;
+		this.reg = reg;
+		this.ocp = ocp;
+		this.rolPower = rolPower;
+		this.eqt = eqt;
 	}
+
+
+
+
+	public Rol(int rolId, String rolName, String rolLoginName, String rolPwd, String rolEmail, String rolMood, Pic pic,
+			Reg reg, Ocp ocp, int rolPower, Eqt eqt) {
+		super();
+		this.rolId = rolId;
+		this.rolName = rolName;
+		this.rolLoginName = rolLoginName;
+		this.rolPwd = rolPwd;
+		this.rolEmail = rolEmail;
+		this.rolMood = rolMood;
+		this.pic = pic;
+		this.reg = reg;
+		this.ocp = ocp;
+		this.rolPower = rolPower;
+		this.eqt = eqt;
+	}
+
 
 
 
@@ -84,9 +97,11 @@ public class Rol {
 
 
 
+
 	public void setRolId(int rolId) {
 		this.rolId = rolId;
 	}
+
 
 
 
@@ -96,9 +111,11 @@ public class Rol {
 
 
 
+
 	public void setRolName(String rolName) {
 		this.rolName = rolName;
 	}
+
 
 
 
@@ -108,9 +125,11 @@ public class Rol {
 
 
 
+
 	public void setRolLoginName(String rolLoginName) {
 		this.rolLoginName = rolLoginName;
 	}
+
 
 
 
@@ -120,9 +139,11 @@ public class Rol {
 
 
 
+
 	public void setRolPwd(String rolPwd) {
 		this.rolPwd = rolPwd;
 	}
+
 
 
 
@@ -132,9 +153,11 @@ public class Rol {
 
 
 
+
 	public void setRolEmail(String rolEmail) {
 		this.rolEmail = rolEmail;
 	}
+
 
 
 
@@ -144,9 +167,11 @@ public class Rol {
 
 
 
+
 	public void setRolMood(String rolMood) {
 		this.rolMood = rolMood;
 	}
+
 
 
 
@@ -156,9 +181,11 @@ public class Rol {
 
 
 
+
 	public void setPic(Pic pic) {
 		this.pic = pic;
 	}
+
 
 
 
@@ -168,9 +195,11 @@ public class Rol {
 
 
 
+
 	public void setReg(Reg reg) {
 		this.reg = reg;
 	}
+
 
 
 
@@ -180,9 +209,11 @@ public class Rol {
 
 
 
+
 	public void setOcp(Ocp ocp) {
 		this.ocp = ocp;
 	}
+
 
 
 
@@ -192,9 +223,25 @@ public class Rol {
 
 
 
+
 	public void setRolPower(int rolPower) {
 		this.rolPower = rolPower;
 	}
+
+
+
+
+	public Eqt getEqt() {
+		return eqt;
+	}
+
+
+
+
+	public void setEqt(Eqt eqt) {
+		this.eqt = eqt;
+	}
+
 
 
 
@@ -202,7 +249,10 @@ public class Rol {
 	public String toString() {
 		return "Rol [rolId=" + rolId + ", rolName=" + rolName + ", rolLoginName=" + rolLoginName + ", rolPwd=" + rolPwd
 				+ ", rolEmail=" + rolEmail + ", rolMood=" + rolMood + ", pic=" + pic + ", reg=" + reg + ", ocp=" + ocp
-				+ ", rolPower=" + rolPower + "]";
+				+ ", rolPower=" + rolPower + ", eqt=" + eqt + "]";
 	}
+	
+	
+	
 	
 }

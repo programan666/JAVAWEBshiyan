@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,16 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import commen.DAOFactory;
+import eqt.dao.EqtDao;
+import eqt.pojo.Eqt;
 import ocp.dao.OcpDao;
 import ocp.pojo.Ocp;
 import pic.dao.PicDao;
+import pic.pojo.Pic;
 import reg.dao.RegDao;
 import reg.pojo.Reg;
 import rol.dao.RolDao;
 import rol.pojo.Rol;
 
 public class RolServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -32,6 +35,7 @@ public class RolServlet extends HttpServlet {
 		RegDao regdao = DAOFactory.instance().getRegDao();
 		OcpDao ocpdao = DAOFactory.instance().getOcpDao();
 		RolDao roldao = DAOFactory.instance().getRolDao();
+		EqtDao eqtdao = DAOFactory.instance().getEqtDao();
 		PicDao picdao = DAOFactory.instance().getPicDao();
 		int option = Integer.parseInt(request.getParameter("option"));
 		String mBlock = "style='display:block'";
@@ -72,7 +76,11 @@ public class RolServlet extends HttpServlet {
 				if(!emailExit){
 					if(!loginNameExit){
 						if(!nameExit){
-							Rol rol = new Rol(rolName,rolLoginName,rolPwd,rolEmail,rolMood,picdao.queryById(86),regdao.queryById(rolRegSelected),ocpdao.queryByName(rolOcpName),100);
+							Pic modelPic = picdao.queryById(86);
+							Pic userPicmodel = new Pic(rolLoginName,modelPic.getInfo(),modelPic.getPicSize(),modelPic.getPicData(),new Date());
+							picdao.insert(userPicmodel);
+							Pic userPic = picdao.queryById(picdao.queryByName(rolLoginName));
+							Rol rol = new Rol(rolName,rolLoginName,rolPwd,rolEmail,rolMood,userPic,regdao.queryById(rolRegSelected),ocpdao.queryByName(rolOcpName),100,eqtdao.queryById(1));
 							roldao.insert(rol);
 							session.setAttribute("rolInfo", rol);
 							response.sendRedirect("role.jsp");
@@ -247,6 +255,41 @@ public class RolServlet extends HttpServlet {
 			}
 			
 			break;
+			
+		case 10:
+			//返回所有装备信息到管理装备界面
+			try {
+				ArrayList<Eqt> list = eqtdao.query();
+				request.setAttribute("eqtList", list);
+				request.setAttribute("mEqtBlock", mBlock);
+				request.setAttribute("mStartNone", mNone);
+				System.out.println(list);
+				request.getRequestDispatcher("rolEqt.jsp").forward(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		
+		case 11:
+			//匹配rolid和eqtid
+			try {
+				int selectedEqtId = Integer.parseInt(request.getParameter("selectedEqtId"));
+				int rolId = Integer.parseInt(request.getParameter("rolId"));
+				Rol rol = roldao.queryById(rolId);
+				Eqt eqt = eqtdao.queryById(selectedEqtId);
+				int powerIncrease = eqt.getEqtPower();
+				int powerNew = 100+powerIncrease;
+				rol.setRolPower(powerNew);
+				rol.setEqt(eqt);
+				roldao.update(rol);
+				request.getSession().removeAttribute("rolInfo");
+				Rol newrol = roldao.queryById(rolId);
+				session.setAttribute("rolInfo", newrol);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 		}
 		

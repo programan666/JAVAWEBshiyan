@@ -648,6 +648,84 @@ a:active {
 	background: none;
 }
 
+.update-userpic{
+	display: block;
+	border-radius: 50%;
+}
+
+.updateRol-box{
+	width: 360px;
+	text-align: center;
+    padding: 30px;
+    margin: 70px auto;
+    color: #FFFFFF;
+    background-color: rgba(0,0,0,0.7);
+}
+
+.m-start img{
+	display: inline;
+}
+
+
+.start-left{
+	animation: leftin 1 0.5s linear;
+}
+
+.start-right{
+	float: right;
+	animation: rightin 1 0.5s linear;
+}
+
+.searchPage p{
+	color: #FFFFFF;
+	margin: 10px;
+}
+
+.equipment-box-rol{
+	width: 100%;
+    padding: 20px;
+    float: left;
+    margin: 9.2px 11px;
+}
+
+.equipment-box-rol:hover{
+	cursor: pointer;
+}
+
+.equipment-box-rol img {
+	width: 100%;
+}
+
+.equipment-box-rol span {
+	text-align: center;
+	color: #FFFFFF;
+	display: block;
+	font-size: 24px;
+	letter-spacing: 4px;
+	line-height: 30px;
+}
+
+.equipment-box-rol img:hover{
+	cursor: pointer;
+	color: #f7bf62;
+	text-decoration: underline;
+}
+
+.slick-list{
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.recev-eqt{
+	margin: 10px auto;
+	width: 272px;
+	height: 264px;
+	border: 2px white solid;
+}
+
+.showit{
+	display: block!important;
+}
+
 @-webkit-keyframes mCon {
 	0% {
 		opacity: 0;
@@ -657,5 +735,29 @@ a:active {
 	}
 	100% {
 		opacity: 1;
+	}
+}
+
+@-webkit-keyframes leftin {
+	0% {
+		margin-left: -200px;
+	}
+	50% {
+		margin-left: -100px;
+	}
+	100% {
+		margin-left: 4px;
+	}
+}
+
+@-webkit-keyframes rightin {
+	0% {
+		margin-right: -200px;
+	}
+	50% {
+		margin-right: -100px;
+	}
+	100% {
+		margin-right: 4px;
 	}
 }

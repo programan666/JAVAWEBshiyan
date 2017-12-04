@@ -89,6 +89,30 @@ $('document').ready(function(){
 		}
 	});
 	
+	$('#updateRolPicBtn').click(function(){
+		if($('#rolimgFile').val()!=''){
+			var file = $('#rolimgFile').get(0).files[0];
+			var formData = new FormData();
+			formData.append("updateRolPicId",$('#updateRolPicId').val());
+			formData.append("rolimgFile",file);
+			$.ajax({
+				url: 'http://localhost:7777/JAVAWEB/updatePicServlet',
+				type: 'POST',
+				data: formData,
+				processData: false,
+				contentType: false,
+			}).done(function() {
+					layer.msg('头像更改成功');
+					var a = setTimeout(function(){
+						parent.location.reload();
+					},1500);
+				})
+		}
+		else{
+			layer.msg('图片没有改变，请重试');
+		}
+	});
+	
 	$('#updateOcpPicBtn').click(function(){
 		if($('#imgFile').val()!=''){
 			var file = $('#imgFile').get(0).files[0];
@@ -323,3 +347,4 @@ function checkRolPwd(){
 		return false;
 	}
 }
+

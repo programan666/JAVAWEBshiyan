@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import org.junit.Test;
 
 import commen.DAOFactory;
+import eqt.dao.EqtDao;
 import ocp.dao.OcpDao;
 import pic.dao.PicDao;
 import reg.dao.RegDao;
@@ -16,9 +17,10 @@ public class TestRolDao {
 	PicDao picdao = DAOFactory.instance().getPicDao();
 	RegDao regdao = DAOFactory.instance().getRegDao();
 	OcpDao ocpdao = DAOFactory.instance().getOcpDao();
+	EqtDao eqtdao = DAOFactory.instance().getEqtDao();
 	@Test
 	public void insert() throws SQLException{
-		Rol rol = new Rol("染红岁月","firstrole","666666","849740574@qq.com","感觉自己萌萌哒",picdao.queryById(41),regdao.queryById(142),ocpdao.queryById(21),100);
+		Rol rol = new Rol("染红岁月","firstrole","666666","849740574@qq.com","感觉自己萌萌哒",picdao.queryById(41),regdao.queryById(142),ocpdao.queryById(21),100,eqtdao.queryById(0));
 		roldao.insert(rol);
 	}
 	

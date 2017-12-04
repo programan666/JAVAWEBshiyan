@@ -45,7 +45,7 @@ public class EqtDaoImp implements EqtDao{
 		}
 		rs.close();
 		pstmt.close();
-		conn.close();
+		//conn.close();
 		return eqt;
 	}
 	

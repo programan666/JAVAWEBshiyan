@@ -33,10 +33,11 @@
 			Rol rol = (Rol)session.getAttribute("rolInfo");
 			if(rol!=null){
 		%>
-		<div class="user-pic">
-			<img src="ImagesServlet?option=1&&picId=<%=rol.getPic().getPicId() %>" alt="" />
-		</div>
-		
+		<a href="RolPic.jsp" class="update-userpic" target="main">
+			<div class="user-pic">
+				<img src="ImagesServlet?option=1&&picId=<%=rol.getPic().getPicId() %>" alt="" />
+			</div>
+		</a>
 		<input type="text" class="user-name" id="rolNameInp" value="<%=rol.getRolName() %>" />
 <!--		<p class="user-name">
 			<%=rol.getRolName() %>
@@ -45,7 +46,7 @@
 	</div>
 	<div class="menu">
 		<a href="RolPwdInfo.jsp" target="main" class="menu-a" style="margin-top: 33px;">修改密码</a>
-		<a href="" target="main" class="menu-a">管理装备</a>
+		<a href="RolServlet?option=10" target="main" class="menu-a">管理装备</a>
 		<a href="" target="main" class="menu-a">切磋武艺</a>
 		<a href="RolDelet.jsp" target="main" class="menu-a">删除角色</a>
 		<a href="RolServlet?option=7" target="_top" class="menu-a">注销登录</a>
@@ -57,13 +58,13 @@
 		$(document).ready(function(){
 			$("#rolNameInp").blur(function(){
 			var rolNameInptext =  $("#rolNameInp").val();
-				var params = {
-						newRolName:rolNameInptext,
-						rolId:<%=rol.getRolId() %>
-					};
-				$.post('http://localhost:7777/JAVAWEB/RolServlet?option=8', params, function(data) {
-					
-				});
+						var params = {
+							newRolName:rolNameInptext,
+							rolId:<%=rol.getRolId() %>
+						};
+					$.post('http://localhost:7777/JAVAWEB/RolServlet?option=8', params, function(data) {
+						
+					});
 		});
 		})
 		

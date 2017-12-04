@@ -113,16 +113,15 @@ public class MngServlet extends HttpServlet {
 			
 		case 2:
 			//ÐÞ¸ÄÃÜÂë
-			String mngloginName = (String)session.getAttribute("mngLoginName");
+			Mng loginMng = (Mng)session.getAttribute("loginMng");
 			String lpassWord = request.getParameter("lpassWord");
 			String xpassWord = request.getParameter("xpassWord");
 			String xpassWord2 = request.getParameter("xpassWord2");
 			try {
-				Mng mng = mngdao.queryByLoginName(mngloginName);
-				String linshiPassWord = mng.getMngPwd();
+				String linshiPassWord = loginMng.getMngPwd();
 				if(linshiPassWord.equals(lpassWord)){
-					mng.setMngPwd(xpassWord);
-					mngdao.update(mng);
+					loginMng.setMngPwd(xpassWord);
+					mngdao.update(loginMng);
 					int updatePassWordResult = 1;
 					request.setAttribute("updatePassWordResult",updatePassWordResult);
 					request.setAttribute("mPinfoBlock", mBlock);
@@ -232,6 +231,12 @@ public class MngServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			break;
+			
+		case 8:
+			//×¢ÏúµÇÂ¼
+			request.getSession().removeAttribute("loginMng");
+			response.sendRedirect("login.jsp");
 			break;
 			
 		}

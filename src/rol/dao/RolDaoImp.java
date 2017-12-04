@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import commen.DAOFactory;
 import commen.DbUtil;
-import mng.pojo.Mng;
+import eqt.dao.EqtDao;
 import ocp.dao.OcpDao;
 import pic.dao.PicDao;
 import reg.dao.RegDao;
@@ -18,10 +18,11 @@ public class RolDaoImp implements RolDao{
 		RegDao regdao = DAOFactory.instance().getRegDao();
 		OcpDao ocpdao = DAOFactory.instance().getOcpDao();
 		PicDao picdao = DAOFactory.instance().getPicDao();
+		EqtDao eqtdao = DAOFactory.instance().getEqtDao();
 		//插入角色
 		public void insert(Rol rol) throws SQLException{
 			Connection conn = DbUtil.getConnection();
-			String sql = "insert into rol values (rol_seq.nextval,?,?,?,?,?,?,?,?,?)";
+			String sql = "insert into rol values (rol_seq.nextval,?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, rol.getRolName());
 			pstmt.setString(2, rol.getRolLoginName());
@@ -32,6 +33,7 @@ public class RolDaoImp implements RolDao{
 			pstmt.setInt(7, rol.getReg().getRegId());
 			pstmt.setInt(8, rol.getOcp().getOcpId());
 			pstmt.setInt(9, rol.getRolPower());
+			pstmt.setInt(10, rol.getEqt().getEqtId());
 			pstmt.executeUpdate();
 			pstmt.close();
 			conn.close();
@@ -97,7 +99,7 @@ public class RolDaoImp implements RolDao{
 			Rol rol = null;
 			if(rs.next()){
 				rol = new Rol(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),
-						picdao.queryById(rs.getInt(7)),regdao.queryById(rs.getInt(8)),ocpdao.queryById(rs.getInt(9)),rs.getInt(10));
+						picdao.queryById(rs.getInt(7)),regdao.queryById(rs.getInt(8)),ocpdao.queryById(rs.getInt(9)),rs.getInt(10),eqtdao.queryById(rs.getInt(11)));
 			}
 			rs.close();
 			pstmt.close();
@@ -116,7 +118,7 @@ public class RolDaoImp implements RolDao{
 			Rol rol = null;
 			if(rs.next()){
 				rol = new Rol(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),
-						picdao.queryById(rs.getInt(7)),regdao.queryById(rs.getInt(8)),ocpdao.queryById(rs.getInt(9)),rs.getInt(10));
+						picdao.queryById(rs.getInt(7)),regdao.queryById(rs.getInt(8)),ocpdao.queryById(rs.getInt(9)),rs.getInt(10),eqtdao.queryById(rs.getInt(11)));
 			}
 			rs.close();
 			pstmt.close();
@@ -128,7 +130,7 @@ public class RolDaoImp implements RolDao{
 		//修改信息
 		public void update(Rol rol) throws SQLException{
 			Connection conn = DbUtil.getConnection();
-			String sql = "update rol set rol_id=?,rol_name=?,rol_login_name=?,rol_pwd=?,rol_email=?,rol_mood=?,rol_pic_id=?,rol_reg_id=?,rol_ocp_id=?,rol_power=? where rol_id=?";
+			String sql = "update rol set rol_id=?,rol_name=?,rol_login_name=?,rol_pwd=?,rol_email=?,rol_mood=?,rol_pic_id=?,rol_reg_id=?,rol_ocp_id=?,rol_power=?,rol_eqt_id=? where rol_id=?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, rol.getRolId());
 			pstmt.setString(2, rol.getRolName());
@@ -140,7 +142,8 @@ public class RolDaoImp implements RolDao{
 			pstmt.setInt(8, rol.getReg().getRegId());
 			pstmt.setInt(9, rol.getOcp().getOcpId());
 			pstmt.setInt(10, rol.getRolPower());
-			pstmt.setInt(11, rol.getRolId());
+			pstmt.setInt(11, rol.getEqt().getEqtId());
+			pstmt.setInt(12, rol.getRolId());
 			pstmt.executeUpdate();
 			
 			pstmt.close();
@@ -202,7 +205,7 @@ public class RolDaoImp implements RolDao{
 			ArrayList<Rol> rolList = new ArrayList<Rol>();
 			while(rs.next()){
 				Rol rol = new Rol(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),
-						picdao.queryById(rs.getInt(7)),regdao.queryById(rs.getInt(8)),ocpdao.queryById(rs.getInt(9)),rs.getInt(10));
+						picdao.queryById(rs.getInt(7)),regdao.queryById(rs.getInt(8)),ocpdao.queryById(rs.getInt(9)),rs.getInt(10),eqtdao.queryById(rs.getInt(11)));
 				rolList.add(rol);
 			}
 			rs.close();

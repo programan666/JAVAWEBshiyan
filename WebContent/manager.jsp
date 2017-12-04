@@ -68,7 +68,8 @@
 					%>
 					<p id="loginInfo" class="loginInfo">
 						HELLO!<br> <%=loginMng.getMngLoginName() %><br>
-						<a href="#" id="mPersonalInfoCon" style="font-size: 12px;font-weight:bold ;">修改密码</a></a>
+						<a href="#" id="mPersonalInfoCon" style="font-size: 12px;font-weight:bold ;">修改密码</a>
+						<a href="MngServlet?option=8" id="overloginCon" style="font-size: 12px;font-weight:bold ;">注销登录</a>
 					</p>
 					<%} %>
 				</nav>
@@ -132,8 +133,9 @@
 					</div>
 
 					<div id="m-start" class="m-start" ${mStartNone }>
-						<div style="width:100%;height:300px;background:red">
-
+						<div style="width:100%;height:420px;">
+							<img src="images/mamaleft.png" class="start-left" alt="" width="570" height="420"/>
+							<img src="images/mamaright.png" class="start-right" alt="" width="570" height="420"/>
 						</div>
 					</div>
 
@@ -268,6 +270,7 @@
 							<%} if(nowPage!=pageNum){%>
 							<a href="RolServlet?option=4&&rolNameForSearch=<%=rolName %>&&rolOcpForSearch=<%=rolOcpId %>&&rolRegForSearch=<%=rolRegId %>&&searchfrom=<%=6*nowPage+1 %>&&searchto=<%=6*(nowPage+1) %>">下一页&gt;</a>
 							<%} %>
+							<p>第<%=nowPage %>/<%=pageNum %>页</p>
 						</div>
 						
 						

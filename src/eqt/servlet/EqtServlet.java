@@ -107,6 +107,20 @@ public class EqtServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			break;
+		case 5:
+			//返回所有装备信息到
+			try {
+				ArrayList<Eqt> list = eqtdao.query();
+				request.setAttribute("eqtList", list);
+				request.setAttribute("mEqtBlock", mBlock);
+				request.setAttribute("mStartNone", mNone);
+				System.out.println(list);
+				request.getRequestDispatcher("manager.jsp").forward(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
 			
 		}
 		

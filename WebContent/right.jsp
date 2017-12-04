@@ -44,9 +44,13 @@
 	</div>
 	<div class="user-mood">
 		心情：
-		<textarea rows="7" name="usermoodup" id="usermoodup" class="mood-tex" style="margin: 0px -12px 0px 0px; width: 279px; height: 150px;margin-top: 20px;" placeholder="" class="form-control"><%=rol.getRolMood() %></textarea>
-		
-		
+		<!--<textarea rows="7" name="usermoodup" id="usermoodup" class="mood-tex" style="margin: 0px -12px 0px 0px; width: 279px; height: 150px;margin-top: 20px;" placeholder="" class="form-control"><%=rol.getRolMood() %></textarea>-->
+		<input type="text" class="user-name" id="usermoodup" name="usermoodup" style="text-align: left;" value="<%=rol.getRolMood() %>" />
+		<div style="margin: 25px auto;width: 150px;height: 120px;">
+			<img width="150" height="120" src="ImagesServlet?option=1&&picId=<%=rol.getEqt().getPic().getPicId() %>"/>
+		</div>
+
+			
 	</div>
 	
 	<script type="text/javascript">
