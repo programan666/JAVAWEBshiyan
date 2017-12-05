@@ -82,7 +82,8 @@ public class RolServlet extends HttpServlet {
 							Pic userPic = picdao.queryById(picdao.queryByName(rolLoginName));
 							Rol rol = new Rol(rolName,rolLoginName,rolPwd,rolEmail,rolMood,userPic,regdao.queryById(rolRegSelected),ocpdao.queryByName(rolOcpName),100,eqtdao.queryById(1));
 							roldao.insert(rol);
-							session.setAttribute("rolInfo", rol);
+							Rol nowRol = roldao.queryByLoginName(rolLoginName);
+							session.setAttribute("rolInfo", nowRol);
 							response.sendRedirect("role.jsp");
 							break;
 						}
@@ -280,6 +281,7 @@ public class RolServlet extends HttpServlet {
 				Eqt eqt = eqtdao.queryById(selectedEqtId);
 				int powerIncrease = eqt.getEqtPower();
 				int powerNew = 100+powerIncrease;
+				System.out.println(rol);
 				rol.setRolPower(powerNew);
 				rol.setEqt(eqt);
 				roldao.update(rol);
