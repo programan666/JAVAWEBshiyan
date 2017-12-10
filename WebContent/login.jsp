@@ -32,7 +32,7 @@
             			</a>
           			</div>
           			<div class="col-md-4 no-padding" style="height: 230px;top: 30px;left: 20px;">
-            			<a href="http://www.baidu.com" class="login-btn">
+            			<a href="exe/DzsFullSetup_1.6.10.5693.exe" class="login-btn">
             				<div class="login-btn-s" style="width: 200px;height: 200px;background: url(images/downlaod.png);background-size: cover;"></div>
             				<div class="show-hover" style="height: 200px;width: 200px;"></div>
             			</a>
