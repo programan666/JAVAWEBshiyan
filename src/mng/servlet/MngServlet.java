@@ -1,9 +1,12 @@
 package mng.servlet;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -51,6 +54,12 @@ public class MngServlet extends HttpServlet {
 					if(loginResult==3){		
 						Mng mng = mngdao.queryByLoginName(loginName);
 						session.setAttribute("loginMng", mng);
+						File fi = new File("D:\\Eclipse\\eclipse\\JAVAWEB\\WebContent\\日志\\日志.txt");
+						FileOutputStream output = new FileOutputStream(fi,true);
+						Date date = new Date();
+						String str = date.toString()+":\n"+mng.getMngId()+" 管理员登录\n\n";
+						output.write(str.getBytes());
+						output.close();
 						response.sendRedirect("manager.jsp");
 						return;
 					}
@@ -83,6 +92,12 @@ public class MngServlet extends HttpServlet {
 					if(loginResult==3){		
 						Rol rol = roldao.queryByLoginName(loginName);
 						session.setAttribute("rolInfo", rol);
+						File fi = new File("D:\\Eclipse\\eclipse\\JAVAWEB\\WebContent\\日志\\日志.txt");
+						FileOutputStream output = new FileOutputStream(fi,true);
+						Date date = new Date();
+						String str = date.toString()+":\n"+rol.getRolId()+" 玩家登录\n\n";
+						output.write(str.getBytes());
+						output.close();
 						response.sendRedirect("role.jsp");
 						return;
 					}

@@ -35,7 +35,7 @@
 		%>
 		<a href="RolPic.jsp" class="update-userpic" target="main">
 			<div class="user-pic">
-				<img src="ImagesServlet?option=1&&picId=<%=rol.getPic().getPicId() %>" alt="" />
+				<img width="200" height="200" src="ImagesServlet?option=1&&picId=<%=rol.getPic().getPicId() %>" alt="" />
 			</div>
 		</a>
 		<input type="text" class="user-name" id="rolNameInp" value="<%=rol.getRolName() %>" />
